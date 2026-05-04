@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFE28A">
+
+    <TextView
+        android:id="@+id/txtHola"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hola de\nnuevo !!"
+        android:textColor="#5A000B"
+        android:textSize="38sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="115dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/contenedorLogin"
+        android:layout_width="310dp"
+        android:layout_height="280dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="25dp"
+        android:background="@drawable/fondo_formulario_azul"
+        android:layout_marginTop="65dp"
+        app:layout_constraintTop_toBottomOf="@id/txtHola"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <EditText
+            android:id="@+id/edtNombreLogin"
+            android:layout_width="200dp"
+            android:layout_height="55dp"
+            android:hint="Nombre"
+            android:textSize="18sp"
+            android:textColor="#5A000B"
+            android:textColorHint="#5A000B"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:background="@drawable/fondo_input_azul" />
+
+        <EditText
+            android:id="@+id/edtPasswordLogin"
+            android:layout_width="200dp"
+            android:layout_height="55dp"
+            android:hint="Contraseña"
+            android:textSize="18sp"
+            android:textColor="#5A000B"
+            android:textColorHint="#5A000B"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/fondo_input_azul"
+            android:inputType="textPassword" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnEntrar"
+        android:layout_width="185dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="36dp"
+        android:backgroundTint="#75B3FF"
+        android:text="Entrar"
+        android:textColor="#5A000B"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:cornerRadius="30dp"
+        app:strokeColor="#5A000B"
+        app:strokeWidth="3dp"
+        app:layout_constraintTop_toBottomOf="@id/contenedorLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

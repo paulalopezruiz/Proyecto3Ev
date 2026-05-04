@@ -1,44 +1,44 @@
 package com.example.animalesadopcion
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.example.animalesadopcion.databinding.FragmentFirstBinding
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
-class FirstFragment : Fragment() {
-
-    private var _binding: FragmentFirstBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        _binding = FragmentFirstBinding.inflate(inflater, container, false)
-        return binding.root
-
-    }
+class FirstFragment : Fragment(R.layout.fragment_first) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
-    }
+        val imgAnimales = view.findViewById<ImageView>(R.id.imgAnimales)
+        val txtTitulo = view.findViewById<TextView>(R.id.txtTitulo)
+        val txtSubtitulo = view.findViewById<TextView>(R.id.txtSubtitulo)
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        // Posición inicial
+        imgAnimales.translationY = 300f
+        txtTitulo.alpha = 0f
+        txtSubtitulo.alpha = 0f
+
+        // Animación del logo (sube)
+        imgAnimales.animate()
+            .translationY(0f)
+            .setDuration(1200)
+            .setStartDelay(300)
+            .start()
+
+        // Aparece el título
+        txtTitulo.animate()
+            .alpha(1f)
+            .setDuration(800)
+            .setStartDelay(1000)
+            .start()
+
+        // Aparece el subtítulo
+        txtSubtitulo.animate()
+            .alpha(1f)
+            .setDuration(800)
+            .setStartDelay(1400)
+            .start()
     }
 }
