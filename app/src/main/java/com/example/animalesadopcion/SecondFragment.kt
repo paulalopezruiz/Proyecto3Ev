@@ -19,7 +19,7 @@ class SecondFragment : Fragment(R.layout.fragment_second) {
         }
 
         btnRegistrarse.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_RegisterFragment)
+            findNavController().navigate(R.id.action_SecondFragment_to_RegistroFragment)
         }
     }
 }

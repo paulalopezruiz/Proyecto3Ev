@@ -22,33 +22,30 @@
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
 
-        <!-- YA LO TENÍAS -->
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
 
-        <!-- AÑADE ESTO -->
         <action
             android:id="@+id/action_SecondFragment_to_LoginFragment"
             app:destination="@id/LoginFragment" />
 
+        <!-- 🔥 CORREGIDO AQUÍ -->
         <action
-            android:id="@+id/action_SecondFragment_to_RegisterFragment"
-            app:destination="@id/RegisterFragment" />
+            android:id="@+id/action_SecondFragment_to_RegistroFragment"
+            app:destination="@id/RegistroFragment" />
     </fragment>
 
-    <!-- NUEVO: LOGIN -->
     <fragment
         android:id="@+id/LoginFragment"
         android:name="com.example.animalesadopcion.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login" />
 
-    <!-- NUEVO: REGISTER -->
     <fragment
-        android:id="@+id/RegisterFragment"
-        android:name="com.example.animalesadopcion.RegisterFragment"
-        android:label="Register"
-        tools:layout="@layout/fragment_register" />
+        android:id="@+id/RegistroFragment"
+        android:name="com.example.animalesadopcion.RegistroFragment"
+        android:label="Registro"
+        tools:layout="@layout/fragment_registro" />
 
 </navigation>
