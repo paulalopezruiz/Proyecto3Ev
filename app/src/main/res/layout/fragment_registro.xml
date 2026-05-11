@@ -1,14 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistroFragment">
+    android:background="#FFE28A">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/txtFlechaRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="←"
+        android:textColor="#5A000B"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="-8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/txtTituloRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bienvenido a tu\nnueva familia"
+        android:textColor="#5A000B"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="90dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/contenedorRegistro"
+        android:layout_width="360dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/fondo_formulario"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtTituloRegistro">
+
+        <EditText
+            android:id="@+id/edtNombreRegistro"
+            android:layout_width="220dp"
+            android:layout_height="55dp"
+            android:background="@drawable/fondo_input"
+            android:gravity="center"
+            android:hint="Nombre"
+            android:textColor="#5A000B"
+            android:textColorHint="#5A000B"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edtEmailRegistro"
+            android:layout_width="220dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/fondo_input"
+            android:gravity="center"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textColor="#5A000B"
+            android:textColorHint="#5A000B"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edtPasswordRegistro"
+            android:layout_width="220dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/fondo_input"
+            android:gravity="center"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:textColor="#5A000B"
+            android:textColorHint="#5A000B"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnEstoyListo"
+        android:layout_width="220dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="@android:color/transparent"
+        android:text="Estoy listo!!"
+        android:textColor="#5A000B"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contenedorRegistro"
+        app:strokeColor="#5A000B"
+        app:strokeWidth="4dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

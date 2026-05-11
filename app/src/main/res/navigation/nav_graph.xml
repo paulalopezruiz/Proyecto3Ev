@@ -30,7 +30,6 @@
             android:id="@+id/action_SecondFragment_to_LoginFragment"
             app:destination="@id/LoginFragment" />
 
-        <!-- 🔥 CORREGIDO AQUÍ -->
         <action
             android:id="@+id/action_SecondFragment_to_RegistroFragment"
             app:destination="@id/RegistroFragment" />
@@ -40,12 +39,107 @@
         android:id="@+id/LoginFragment"
         android:name="com.example.animalesadopcion.LoginFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/action_LoginFragment_to_EleccionFragment"
+            app:destination="@id/EleccionFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/RegistroFragment"
         android:name="com.example.animalesadopcion.RegistroFragment"
         android:label="Registro"
-        tools:layout="@layout/fragment_registro" />
+        tools:layout="@layout/fragment_registro">
+
+        <action
+            android:id="@+id/action_RegistroFragment_to_EleccionFragment"
+            app:destination="@id/EleccionFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/EleccionFragment"
+        android:name="com.example.animalesadopcion.EleccionFragment"
+        android:label="Elección"
+        tools:layout="@layout/fragment_eleccion">
+
+        <action
+            android:id="@+id/action_EleccionFragment_to_EncontradoFragment"
+            app:destination="@id/EncontradoFragment" />
+
+        <action
+            android:id="@+id/action_EleccionFragment_to_ListaAnimalesFragment"
+            app:destination="@id/ListaAnimalesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/EncontradoFragment"
+        android:name="com.example.animalesadopcion.EncontradoFragment"
+        android:label="Encontrado"
+        tools:layout="@layout/fragment_encontrado" />
+
+    <fragment
+        android:id="@+id/ListaAnimalesFragment"
+        android:name="com.example.animalesadopcion.ListaAnimalesFragment"
+        android:label="Animales"
+        tools:layout="@layout/fragment_lista_animales">
+
+        <action
+            android:id="@+id/action_ListaAnimalesFragment_to_DetalleAnimalFragment"
+            app:destination="@id/DetalleAnimalFragment" />
+
+        <action
+            android:id="@+id/action_ListaAnimalesFragment_to_PerfilFragment"
+            app:destination="@id/PerfilFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DetalleAnimalFragment"
+        android:name="com.example.animalesadopcion.DetalleAnimalFragment"
+        android:label="Detalle animal"
+        tools:layout="@layout/fragment_detalle_animal" />
+
+    <fragment
+        android:id="@+id/PerfilFragment"
+        android:name="com.example.animalesadopcion.PerfilFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_perfil">
+
+        <action
+            android:id="@+id/action_PerfilFragment_to_MisAnimalesFragment"
+            app:destination="@id/MisAnimalesFragment" />
+
+        <action
+            android:id="@+id/action_PerfilFragment_to_FavoritosFragment"
+            app:destination="@id/FavoritosFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/MisAnimalesFragment"
+        android:name="com.example.animalesadopcion.MisAnimalesFragment"
+        android:label="Mis animales"
+        tools:layout="@layout/fragment_mis_animales">
+
+        <action
+            android:id="@+id/action_MisAnimalesFragment_to_DetalleAnimalMioFragment"
+            app:destination="@id/DetalleAnimalMioFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/FavoritosFragment"
+        android:name="com.example.animalesadopcion.FavoritosFragment"
+        android:label="Favoritos"
+        tools:layout="@layout/fragment_favoritos">
+
+        <action
+            android:id="@+id/action_FavoritosFragment_to_DetalleAnimalFragment"
+            app:destination="@id/DetalleAnimalFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DetalleAnimalMioFragment"
+        android:name="com.example.animalesadopcion.DetalleAnimalMioFragment"
+        android:label="Detalle animal mío"
+        tools:layout="@layout/fragment_detalle_animal_mio" />
 
 </navigation>

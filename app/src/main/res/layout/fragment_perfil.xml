@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFE28A">
+
+    <View
+        android:id="@+id/fondoFotoPerfil"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:background="#CCCCCC"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/contenedorPerfil"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:paddingTop="35dp"
+        android:background="@drawable/fondo_detalle_animal"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="215dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/txtNombrePerfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            android:textColor="#5A000B"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnMiFamilia"
+            android:layout_width="280dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="90dp"
+            android:text="Mi Familia"
+            android:textColor="#5A000B"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:backgroundTint="#75B3FF"
+            app:cornerRadius="40dp" />
+
+        <Button
+            android:id="@+id/btnFavoritosPerfil"
+            android:layout_width="280dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="42dp"
+            android:text="Favoritos"
+            android:textColor="#5A000B"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:backgroundTint="@android:color/transparent"
+            app:cornerRadius="40dp"
+            app:strokeColor="#5A000B"
+            app:strokeWidth="4dp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
