@@ -33,8 +33,7 @@ class RegistroFragment : Fragment(R.layout.fragment_registro) {
                 Toast.makeText(requireContext(), "Rellena todos los campos", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), "Registro completado", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_RegistroFragment_to_ListaAnimalesFragment)
-            }
+                findNavController().navigate(R.id.action_RegistroFragment_to_EleccionFragment)            }
         }
     }
 }
