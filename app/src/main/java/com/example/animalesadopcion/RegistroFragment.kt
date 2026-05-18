@@ -14,15 +14,11 @@ class RegistroFragment : Fragment(R.layout.fragment_registro) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val flecha = view.findViewById<TextView>(R.id.txtFlechaRegistro)
         val edtNombre = view.findViewById<EditText>(R.id.edtNombreRegistro)
         val edtEmail = view.findViewById<EditText>(R.id.edtEmailRegistro)
         val edtPassword = view.findViewById<EditText>(R.id.edtPasswordRegistro)
         val btnEstoyListo = view.findViewById<Button>(R.id.btnEstoyListo)
 
-        flecha.setOnClickListener {
-            findNavController().popBackStack()
-        }
 
         btnEstoyListo.setOnClickListener {
             val nombre = edtNombre.text.toString()

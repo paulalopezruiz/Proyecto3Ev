@@ -5,6 +5,14 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.Lifecycle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.navigation.fragment.findNavController
 
 class ListaAnimalesFragment : Fragment(R.layout.fragment_lista_animales) {
 
@@ -14,63 +22,63 @@ class ListaAnimalesFragment : Fragment(R.layout.fragment_lista_animales) {
         val recyclerAnimales =
             view.findViewById<RecyclerView>(R.id.recyclerAnimales)
 
-        // 🔥 2 COLUMNAS
         recyclerAnimales.layoutManager =
             GridLayoutManager(requireContext(), 2)
 
         val listaAnimales = listOf(
-
-            Animal(
-                "Perro",
-                "Hembra",
-                "En adopción",
-                "Madrid",
-                R.drawable.perrito_login
-            ),
-
-            Animal(
-                "Perro",
-                "Macho",
-                "Encontrado",
-                "Barcelona",
-                R.drawable.perrito_login
-            ),
-
-            Animal(
-                "Gato",
-                "Macho",
-                "En adopción",
-                "Valencia",
-                R.drawable.perrito_login
-            ),
-
-            Animal(
-                "Perro",
-                "Hembra",
-                "Perdido",
-                "Sevilla",
-                R.drawable.perrito_login
-            ),
-
-            Animal(
-                "Pájaro",
-                "Hembra",
-                "En adopción",
-                "Bilbao",
-                R.drawable.perrito_login
-            ),
-
-            Animal(
-                "Gato",
-                "Macho",
-                "Encontrado",
-                "Madrid",
-                R.drawable.perrito_login
-            )
+            Animal("Perro", "Hembra", "En adopción", "Madrid", R.drawable.perrito_login),
+            Animal("Perro", "Macho", "Encontrado", "Barcelona", R.drawable.perrito_login),
+            Animal("Gato", "Macho", "En adopción", "Valencia", R.drawable.perrito_login),
+            Animal("Perro", "Hembra", "Perdido", "Sevilla", R.drawable.perrito_login),
+            Animal("Pájaro", "Hembra", "En adopción", "Bilbao", R.drawable.perrito_login),
+            Animal("Gato", "Macho", "Encontrado", "Madrid", R.drawable.perrito_login)
         )
 
-        val adapter = AnimalAdapter(listaAnimales)
+        recyclerAnimales.adapter = AnimalAdapter(listaAnimales)
 
-        recyclerAnimales.adapter = adapter
+        addMenu()
+    }
+
+    private fun addMenu() {
+
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object : MenuProvider {
+
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_general, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+
+                val navController = findNavController()
+
+                return when (menuItem.itemId) {
+
+                    R.id.menu_home -> {
+                        navController.navigate(R.id.EleccionFragment)
+                        true
+                    }
+
+                    R.id.menu_profile -> {
+                        navController.navigate(R.id.PerfilFragment)
+                        true
+                    }
+
+                    R.id.menu_logout -> {
+                        AlertDialog.Builder(requireContext())
+                            .setTitle("Salir")
+                            .setMessage("¿Estás seguro de que quieres salir de la aplicación?")
+                            .setPositiveButton("Sí") { _, _ -> requireActivity().finish() }
+                            .setNegativeButton("No") { d, _ -> d.dismiss() }
+                            .show()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 }

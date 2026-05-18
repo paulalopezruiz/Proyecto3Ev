@@ -7,6 +7,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.navigation.fragment.findNavController
+
 
 class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
 
@@ -30,22 +39,62 @@ class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
         txtSexoDetalle.text = "Hembra"
         txtEdadDetalle.text = "2 años"
         txtPesoDetalle.text = "8 kg"
-        txtInformacionDetalle.text = "Luna es una perrita tranquila, cariñosa y busca una nueva familia."
+        txtInformacionDetalle.text = "Luna es una perrita tranquila..."
 
         var favorito = false
 
         txtFavorito.setOnClickListener {
             favorito = !favorito
-
-            if (favorito) {
-                txtFavorito.text = "♥"
-            } else {
-                txtFavorito.text = "♡"
-            }
+            txtFavorito.text = if (favorito) "♥" else "♡"
         }
 
         btnAdoptar.setOnClickListener {
-            Toast.makeText(requireContext(), "Solicitud de adopción enviada", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Solicitud enviada", Toast.LENGTH_SHORT).show()
         }
+
+        addMenu()
+    }
+
+    private fun addMenu() {
+
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object : MenuProvider {
+
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_general, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+
+                val navController = findNavController()
+
+                return when (menuItem.itemId) {
+
+                    R.id.menu_home -> {
+                        navController.navigate(R.id.EleccionFragment)
+                        true
+                    }
+
+                    R.id.menu_profile -> {
+                        navController.navigate(R.id.PerfilFragment)
+                        true
+                    }
+
+                    R.id.menu_logout -> {
+                        AlertDialog.Builder(requireContext())
+                            .setTitle("Salir")
+                            .setMessage("¿Estás seguro de que quieres salir de la aplicación?")
+                            .setPositiveButton("Sí") { _, _ -> requireActivity().finish() }
+                            .setNegativeButton("No") { d, _ -> d.dismiss() }
+                            .show()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 }
