@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.animalesadopcion.BBDD.Animal
 
 class AnimalAdapter(private val listaAnimales: List<Animal>) :
     RecyclerView.Adapter<AnimalAdapter.AnimalViewHolder>() {
 
     class AnimalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         val imgAnimal: ImageView = itemView.findViewById(R.id.imgAnimal)
         val txtNombreAnimal: TextView = itemView.findViewById(R.id.txtNombreAnimal)
         val txtSexoAnimal: TextView = itemView.findViewById(R.id.txtSexoAnimal)
@@ -19,7 +19,6 @@ class AnimalAdapter(private val listaAnimales: List<Animal>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
-
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_animal, parent, false)
 
@@ -27,7 +26,6 @@ class AnimalAdapter(private val listaAnimales: List<Animal>) :
     }
 
     override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {
-
         val animal = listaAnimales[position]
 
         holder.imgAnimal.setImageResource(animal.imagen)

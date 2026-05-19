@@ -10,9 +10,18 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.activity.viewModels
 import com.example.animalesadopcion.databinding.ActivityMainBinding
+import com.example.animalesadopcion.BBDD.AppDatabase
+import com.example.animalesadopcion.BBDD.Repositorio
+import com.example.animalesadopcion.ui.AppVM
+import com.example.animalesadopcion.ui.AppVMFactory
 
 class MainActivity : AppCompatActivity() {
+
+    private val db by lazy { AppDatabase.getDatabase(this) }
+    private val repo by lazy { Repositorio(db.usuarioDAO(), db.animalDAO()) }
+    val vm: AppVM by viewModels { AppVMFactory(repo) }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding

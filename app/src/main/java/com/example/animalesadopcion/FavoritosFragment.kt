@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.animalesadopcion.BBDD.Animal
 
 class FavoritosFragment : Fragment(R.layout.fragment_favoritos) {
 
@@ -26,20 +27,18 @@ class FavoritosFragment : Fragment(R.layout.fragment_favoritos) {
             GridLayoutManager(requireContext(), 2)
 
         val listaFavoritos = listOf(
-            Animal("Perro", "Femenino", "En adopción", "Madrid", R.drawable.perrito_login),
-            Animal("Gato", "Masculino", "En adopción", "Valencia", R.drawable.perrito_login),
-            Animal("Perro", "Masculino", "Encontrado", "Sevilla", R.drawable.perrito_login),
-            Animal("Pájaro", "No conocido", "Perdido", "Madrid", R.drawable.perrito_login)
+            Animal(0, "Perro", "Femenino", "En adopción", "Madrid", R.drawable.perrito_login),
+            Animal(0, "Gato", "Masculino", "En adopción", "Valencia", R.drawable.perrito_login),
+            Animal(0, "Perro", "Masculino", "Encontrado", "Sevilla", R.drawable.perrito_login),
+            Animal(0, "Pájaro", "No conocido", "Perdido", "Madrid", R.drawable.perrito_login)
         )
 
         recyclerFavoritos.adapter = AnimalAdapter(listaFavoritos)
 
-        // 🔥 MENU
         addMenu()
     }
 
     private fun addMenu() {
-
         val menuHost: MenuHost = requireActivity()
 
         menuHost.addMenuProvider(object : MenuProvider {
@@ -49,11 +48,9 @@ class FavoritosFragment : Fragment(R.layout.fragment_favoritos) {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-
                 val navController = findNavController()
 
                 return when (menuItem.itemId) {
-
                     R.id.menu_home -> {
                         navController.navigate(R.id.EleccionFragment)
                         true
@@ -65,7 +62,6 @@ class FavoritosFragment : Fragment(R.layout.fragment_favoritos) {
                     }
 
                     R.id.menu_logout -> {
-
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")
                             .setMessage("¿Estás seguro de que quieres salir de la aplicación?")
