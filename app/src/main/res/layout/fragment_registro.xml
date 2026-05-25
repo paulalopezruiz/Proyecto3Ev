@@ -52,7 +52,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/fondo_input"
             android:gravity="center"
-            android:hint="Email"
+            android:hint="Telefono"
             android:inputType="textEmailAddress"
             android:textColor="#5A000B"
             android:textColorHint="#5A000B"

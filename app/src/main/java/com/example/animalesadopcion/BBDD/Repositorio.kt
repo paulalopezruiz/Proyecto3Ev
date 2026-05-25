@@ -7,8 +7,8 @@ class Repositorio(
 
     // USUARIOS
     suspend fun registrar(usuario: Usuario) = usuarioDAO.registrar(usuario)
-    suspend fun login(telefono: String, pass: String) = usuarioDAO.login(telefono, pass)
-    suspend fun existeTelefono(telefono: String) = usuarioDAO.existeTelefono(telefono)
+    suspend fun login(nombre: String, pass: String) = usuarioDAO.login(nombre, pass)
+    suspend fun existeNombre(nombre: String) = usuarioDAO.existeNombre(nombre)
 
     // ANIMALES
     fun listarTodos() = animalDAO.listarTodos()

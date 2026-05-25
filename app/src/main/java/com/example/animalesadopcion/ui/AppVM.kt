@@ -23,7 +23,7 @@ class AppVM(private val repo: Repositorio) : ViewModel() {
 
     fun borrar(animal: Animal) = viewModelScope.launch { repo.borrar(animal) }
 
-    suspend fun login(tlf: String, pass: String) = repo.login(tlf, pass)
+    suspend fun login(nombre: String, pass: String) = repo.login(nombre, pass)
 
     suspend fun registrar(usuario: Usuario) = repo.registrar(usuario)
 }
