@@ -9,9 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.animalesadopcion.BBDD.Animal
 
 class AnimalAdapter(
-    private val listaAnimales: List<Animal>,
+    private var listaAnimales: List<Animal>,
     private val onClickAnimal: (Animal) -> Unit
 ) : RecyclerView.Adapter<AnimalAdapter.AnimalViewHolder>() {
+
+    fun actualizarLista(nuevaLista: List<Animal>) {
+        listaAnimales = nuevaLista
+        notifyDataSetChanged()
+    }
 
     class AnimalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imgAnimal: ImageView = itemView.findViewById(R.id.imgAnimal)
@@ -23,7 +28,6 @@ class AnimalAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_animal, parent, false)
-
         return AnimalViewHolder(view)
     }
 
@@ -40,7 +44,5 @@ class AnimalAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        return listaAnimales.size
-    }
+    override fun getItemCount(): Int = listaAnimales.size
 }

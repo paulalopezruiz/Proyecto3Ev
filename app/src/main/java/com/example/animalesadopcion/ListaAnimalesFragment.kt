@@ -14,44 +14,76 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.animalesadopcion.BBDD.Animal
+import com.example.animalesadopcion.BBDD.AppDatabase
+import com.example.animalesadopcion.BBDD.Repositorio
+import com.example.animalesadopcion.ui.AppVM
+import com.example.animalesadopcion.ui.AppVMFactory
 
 class ListaAnimalesFragment : Fragment(R.layout.fragment_lista_animales) {
+
+    private lateinit var vm: AppVM
+    private lateinit var adapter: AnimalAdapter
+
+    private val filtrosActivos = mutableSetOf<String>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerAnimales =
-            view.findViewById<RecyclerView>(R.id.recyclerAnimales)
+        addMenu()
 
-        recyclerAnimales.layoutManager =
-            GridLayoutManager(requireContext(), 2)
+        val db = AppDatabase.getDatabase(requireContext())
+        val repo = Repositorio(db.usuarioDAO(), db.animalDAO())
+        vm = AppVMFactory(repo).create(AppVM::class.java)
 
-        val listaAnimales = listOf(
-            Animal(0, "Perro", "Hembra", "En adopción", "Madrid", R.drawable.perrito_login),
-            Animal(0, "Perro", "Macho", "Encontrado", "Barcelona", R.drawable.perrito_login),
-            Animal(0, "Gato", "Macho", "En adopción", "Valencia", R.drawable.perrito_login),
-            Animal(0, "Perro", "Hembra", "Perdido", "Sevilla", R.drawable.perrito_login),
-            Animal(0, "Pájaro", "Hembra", "En adopción", "Bilbao", R.drawable.perrito_login),
-            Animal(0, "Gato", "Macho", "Encontrado", "Madrid", R.drawable.perrito_login)
-        )
+        val recycler = view.findViewById<RecyclerView>(R.id.recyclerAnimales)
+        recycler.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        recyclerAnimales.adapter = AnimalAdapter(listaAnimales) { animal ->
-
+        adapter = AnimalAdapter(emptyList()) { animal ->
             val bundle = Bundle().apply {
-                putString("tipo", animal.tipo)
-                putString("sexo", animal.sexo)
-                putString("estado", animal.estado)
-                putString("localizacion", animal.localizacion)
-                putInt("imagen", animal.imagen)
+                putInt("id", animal.id)
             }
-
             findNavController().navigate(
                 R.id.action_ListaAnimalesFragment_to_DetalleAnimalFragment,
                 bundle
             )
         }
 
-        addMenu()
+        recycler.adapter = adapter
+
+        val btnPerro = view.findViewById<View>(R.id.btnPerro)
+        val btnGato = view.findViewById<View>(R.id.btnGato)
+        val btnPajaro = view.findViewById<View>(R.id.btnPajaro)
+
+        btnPerro.setOnClickListener { toggleFiltro("Perro", btnPerro) }
+        btnGato.setOnClickListener { toggleFiltro("Gato", btnGato) }
+        btnPajaro.setOnClickListener { toggleFiltro("Pájaro", btnPajaro) }
+
+        vm.animales.observe(viewLifecycleOwner) { lista ->
+            val sinAdoptados = lista.filter { it.adoptadoPor == null }
+            aplicarFiltros(sinAdoptados)
+        }
+    }
+
+    private fun toggleFiltro(tipo: String, boton: View) {
+        if (filtrosActivos.contains(tipo)) {
+            filtrosActivos.remove(tipo)
+            boton.alpha = 1f
+        } else {
+            filtrosActivos.add(tipo)
+            boton.alpha = 0.5f
+        }
+
+        vm.animales.value?.let { lista ->
+            val sinAdoptados = lista.filter { it.adoptadoPor == null }
+            aplicarFiltros(sinAdoptados)
+        }
+    }
+
+    private fun aplicarFiltros(lista: List<Animal>) {
+        val filtrada = if (filtrosActivos.isEmpty()) lista
+        else lista.filter { filtrosActivos.contains(it.tipo) }
+
+        adapter.actualizarLista(filtrada)
     }
 
     private fun addMenu() {
@@ -71,12 +103,10 @@ class ListaAnimalesFragment : Fragment(R.layout.fragment_lista_animales) {
                         navController.navigate(R.id.EleccionFragment)
                         true
                     }
-
                     R.id.menu_profile -> {
                         navController.navigate(R.id.PerfilFragment)
                         true
                     }
-
                     R.id.menu_logout -> {
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")
@@ -88,10 +118,8 @@ class ListaAnimalesFragment : Fragment(R.layout.fragment_lista_animales) {
                                 dialog.dismiss()
                             }
                             .show()
-
                         true
                     }
-
                     else -> false
                 }
             }

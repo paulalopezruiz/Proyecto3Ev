@@ -26,4 +26,8 @@ interface AnimalDAO {
 
     @Delete
     fun borrar(animal: Animal): Int
+
+    @Query("SELECT * FROM animales WHERE id = :id")
+    fun obtenerAnimal(id: Int): Flow<Animal>
+
 }

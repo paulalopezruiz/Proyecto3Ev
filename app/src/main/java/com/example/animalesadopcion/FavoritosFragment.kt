@@ -14,39 +14,36 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.animalesadopcion.BBDD.Animal
+import com.example.animalesadopcion.BBDD.AppDatabase
+import com.example.animalesadopcion.BBDD.Repositorio
+import com.example.animalesadopcion.ui.AppVM
+import com.example.animalesadopcion.ui.AppVMFactory
 
 class FavoritosFragment : Fragment(R.layout.fragment_favoritos) {
+
+    private lateinit var vm: AppVM
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerFavoritos =
-            view.findViewById<RecyclerView>(R.id.recyclerFavoritos)
+        val main = activity as MainActivity
+        val usuarioId = main.vm.usuarioActual.value?.id ?: return
 
-        recyclerFavoritos.layoutManager =
-            GridLayoutManager(requireContext(), 2)
+        val recycler = view.findViewById<RecyclerView>(R.id.recyclerFavoritos)
+        recycler.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        val listaFavoritos = listOf(
-            Animal(0, "Perro", "Hembra", "En adopción", "Madrid", R.drawable.perrito_login),
-            Animal(0, "Gato", "Macho", "En adopción", "Valencia", R.drawable.perrito_login),
-            Animal(0, "Perro", "Macho", "Encontrado", "Sevilla", R.drawable.perrito_login),
-            Animal(0, "Pájaro", "No conocido", "Perdido", "Madrid", R.drawable.perrito_login)
-        )
+        val db = AppDatabase.getDatabase(requireContext())
+        val repo = Repositorio(db.usuarioDAO(), db.animalDAO())
+        vm = AppVMFactory(repo).create(AppVM::class.java)
 
-        recyclerFavoritos.adapter = AnimalAdapter(listaFavoritos) { animal ->
-
-            val bundle = Bundle().apply {
-                putString("tipo", animal.tipo)
-                putString("sexo", animal.sexo)
-                putString("estado", animal.estado)
-                putString("localizacion", animal.localizacion)
-                putInt("imagen", animal.imagen)
+        vm.favoritos(usuarioId).observe(viewLifecycleOwner) { lista ->
+            recycler.adapter = AnimalAdapter(lista) { animal ->
+                val bundle = Bundle().apply { putInt("id", animal.id) }
+                findNavController().navigate(
+                    R.id.action_FavoritosFragment_to_DetalleAnimalFragment,
+                    bundle
+                )
             }
-
-            findNavController().navigate(
-                R.id.action_FavoritosFragment_to_DetalleAnimalFragment,
-                bundle
-            )
         }
 
         addMenu()

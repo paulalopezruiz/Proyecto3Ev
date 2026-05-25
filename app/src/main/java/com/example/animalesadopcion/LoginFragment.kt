@@ -21,12 +21,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Inicializar ViewModel
         val db = AppDatabase.getDatabase(requireContext())
         val repo = Repositorio(db.usuarioDAO(), db.animalDAO())
         vm = AppVMFactory(repo).create(AppVM::class.java)
 
-        // OJO: este campo es el NOMBRE, no teléfono
         val edtNombre = view.findViewById<EditText>(R.id.edtNombreLogin)
         val edtPassword = view.findViewById<EditText>(R.id.edtPasswordLogin)
         val btnEntrar = view.findViewById<Button>(R.id.btnEntrar)
@@ -44,6 +42,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 val usuario = vm.login(nombre, password)
 
                 if (usuario != null) {
+                    val main = activity as MainActivity
+                    main.vm.setUsuarioActual(usuario)
+
                     Toast.makeText(requireContext(), "Bienvenido ${usuario.nombre}", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_LoginFragment_to_EleccionFragment)
                 } else {

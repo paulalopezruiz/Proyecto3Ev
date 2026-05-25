@@ -2,66 +2,103 @@ package com.example.animalesadopcion
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.animalesadopcion.BBDD.Animal
+import com.example.animalesadopcion.BBDD.AppDatabase
+import com.example.animalesadopcion.BBDD.Repositorio
+import com.example.animalesadopcion.ui.AppVM
+import com.example.animalesadopcion.ui.AppVMFactory
+import kotlinx.coroutines.launch
 
 class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
+
+    private lateinit var vm: AppVM
+    private var animalId = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val imgDetalleAnimal = view.findViewById<ImageView>(R.id.imgDetalleAnimal)
-        val txtNombreDetalle = view.findViewById<TextView>(R.id.txtNombreDetalle)
-        val txtUbicacionDetalle = view.findViewById<TextView>(R.id.txtUbicacionDetalle)
-        val txtSexoDetalle = view.findViewById<TextView>(R.id.txtSexoDetalle)
-        val txtEdadDetalle = view.findViewById<TextView>(R.id.txtEdadDetalle)
-        val txtPesoDetalle = view.findViewById<TextView>(R.id.txtPesoDetalle)
-        val txtInformacionDetalle = view.findViewById<TextView>(R.id.txtInformacionDetalle)
-        val txtFavorito = view.findViewById<TextView>(R.id.txtFavorito)
+        addMenu()
+
+        val db = AppDatabase.getDatabase(requireContext())
+        val repo = Repositorio(db.usuarioDAO(), db.animalDAO())
+        vm = AppVMFactory(repo).create(AppVM::class.java)
+
+        val main = activity as MainActivity
+        val usuarioId = main.vm.usuarioActual.value?.id
+
+        animalId = arguments?.getInt("id") ?: 0
+
+        val img = view.findViewById<ImageView>(R.id.imgDetalleAnimal)
+        val txtTipo = view.findViewById<TextView>(R.id.txtNombreDetalle)
+        val txtLoc = view.findViewById<TextView>(R.id.txtUbicacionDetalle)
+        val txtSexo = view.findViewById<TextView>(R.id.txtSexoDetalle)
+        val txtEstado = view.findViewById<TextView>(R.id.txtEdadDetalle)
+        val txtInfo = view.findViewById<TextView>(R.id.txtInformacionDetalle)
+        val txtFav = view.findViewById<TextView>(R.id.txtFavorito)
         val btnAdoptar = view.findViewById<Button>(R.id.btnAdoptar)
 
-        val tipo = arguments?.getString("tipo") ?: "Animal"
-        val sexo = arguments?.getString("sexo") ?: "No indicado"
-        val estado = arguments?.getString("estado") ?: "Sin estado"
-        val localizacion = arguments?.getString("localizacion") ?: "Sin ubicación"
-        val imagen = arguments?.getInt("imagen") ?: R.drawable.perrito_login
+        vm.obtenerAnimal(animalId).observe(viewLifecycleOwner) { animal ->
 
-        imgDetalleAnimal.setImageResource(imagen)
+            img.setImageResource(animal.imagen)
+            txtTipo.text = animal.tipo
+            txtLoc.text = animal.localizacion
+            txtSexo.text = animal.sexo
+            txtEstado.text = animal.estado
+            txtInfo.text = "${animal.tipo} en estado ${animal.estado}. Ubicado en ${animal.localizacion}."
 
-        txtNombreDetalle.text = tipo
-        txtUbicacionDetalle.text = localizacion
-        txtSexoDetalle.text = sexo
-        txtEdadDetalle.text = estado
-        txtPesoDetalle.text = "-"
-        txtInformacionDetalle.text = "$tipo en estado: $estado. Se encuentra en $localizacion."
+            var esFavorito = animal.favoritoDe == usuarioId
+            txtFav.text = if (esFavorito) "♥" else "♡"
 
-        var favorito = false
+            txtFav.setOnClickListener {
+                if (usuarioId == null) {
+                    Toast.makeText(requireContext(), "Inicia sesión", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
 
-        txtFavorito.setOnClickListener {
-            favorito = !favorito
-            txtFavorito.text = if (favorito) "♥" else "♡"
+                esFavorito = !esFavorito
+                txtFav.text = if (esFavorito) "♥" else "♡"
+
+                val actualizado = animal.copy(
+                    favoritoDe = if (esFavorito) usuarioId else null
+                )
+
+                viewLifecycleOwner.lifecycleScope.launch {
+                    vm.actualizar(actualizado)
+                }
+            }
+
+            btnAdoptar.setOnClickListener {
+                if (usuarioId == null) {
+                    Toast.makeText(requireContext(), "Inicia sesión", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                val adoptado = animal.copy(
+                    adoptadoPor = usuarioId,
+                    favoritoDe = null
+                )
+
+                viewLifecycleOwner.lifecycleScope.launch {
+                    vm.actualizar(adoptado)
+                    Toast.makeText(requireContext(), "¡Has adoptado a ${animal.tipo}!", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.ListaAnimalesFragment)
+                }
+            }
         }
-
-        btnAdoptar.setOnClickListener {
-            Toast.makeText(requireContext(), "Solicitud enviada", Toast.LENGTH_SHORT).show()
-        }
-
-        addMenu()
     }
 
     private fun addMenu() {
-
         val menuHost: MenuHost = requireActivity()
 
         menuHost.addMenuProvider(object : MenuProvider {
@@ -71,36 +108,26 @@ class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-
                 val navController = findNavController()
 
                 return when (menuItem.itemId) {
-
                     R.id.menu_home -> {
                         navController.navigate(R.id.EleccionFragment)
                         true
                     }
-
                     R.id.menu_profile -> {
                         navController.navigate(R.id.PerfilFragment)
                         true
                     }
-
                     R.id.menu_logout -> {
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")
-                            .setMessage("¿Estás seguro de que quieres salir de la aplicación?")
-                            .setPositiveButton("Sí") { _, _ ->
-                                requireActivity().finish()
-                            }
-                            .setNegativeButton("No") { dialog, _ ->
-                                dialog.dismiss()
-                            }
+                            .setMessage("¿Seguro?")
+                            .setPositiveButton("Sí") { _, _ -> requireActivity().finish() }
+                            .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
                             .show()
-
                         true
                     }
-
                     else -> false
                 }
             }

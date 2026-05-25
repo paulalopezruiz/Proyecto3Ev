@@ -3,102 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFE28A">
+    android:background="#FFE28A"
+    android:importantForAccessibility="no">
+
 
     <LinearLayout
+        android:id="@+id/contenedorMisAnimales"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:paddingTop="90dp"
-        android:paddingBottom="40dp">
-
-        <!-- CARD 1 -->
-
-        <LinearLayout
-            android:id="@+id/cardAnimalMio1"
-            android:layout_width="320dp"
-            android:layout_height="150dp"
-            android:orientation="vertical"
-            android:background="@drawable/fondo_card_mis_animales">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="105dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/fondo_gris_card" />
-
-            <TextView
-                android:id="@+id/txtNombreAnimalMio1"
-                android:layout_width="match_parent"
-                android:layout_height="41dp"
-                android:text="Nombre"
-                android:textColor="#5A000B"
-                android:textSize="14sp"
-                android:gravity="center" />
-
-        </LinearLayout>
-
-        <!-- CARD 2 -->
-
-        <LinearLayout
-            android:id="@+id/cardAnimalMio2"
-            android:layout_width="320dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="25dp"
-            android:orientation="vertical"
-            android:background="@drawable/fondo_card_mis_animales">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="105dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/fondo_gris_card" />
-
-            <TextView
-                android:id="@+id/txtNombreAnimalMio2"
-                android:layout_width="match_parent"
-                android:layout_height="41dp"
-                android:text="Nombre"
-                android:textColor="#5A000B"
-                android:textSize="14sp"
-                android:gravity="center" />
-
-        </LinearLayout>
-
-        <!-- CARD 3 -->
-
-        <LinearLayout
-            android:id="@+id/cardAnimalMio3"
-            android:layout_width="320dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="25dp"
-            android:orientation="vertical"
-            android:background="@drawable/fondo_card_mis_animales">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="105dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/fondo_gris_card" />
-
-            <TextView
-                android:id="@+id/txtNombreAnimalMio3"
-                android:layout_width="match_parent"
-                android:layout_height="41dp"
-                android:text="Nombre"
-                android:textColor="#5A000B"
-                android:textSize="14sp"
-                android:gravity="center" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+        android:paddingBottom="40dp" />
 
 </ScrollView>

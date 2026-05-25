@@ -123,6 +123,11 @@
         <action
             android:id="@+id/action_MisAnimalesFragment_to_DetalleAnimalMioFragment"
             app:destination="@id/DetalleAnimalMioFragment" />
+
+        <action
+            android:id="@+id/action_MisAnimalesFragment_to_DetalleAnimalFragment"
+            app:destination="@id/DetalleAnimalFragment" />
+
     </fragment>
 
     <fragment
