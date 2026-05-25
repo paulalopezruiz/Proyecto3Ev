@@ -3,6 +3,7 @@ package com.example.animalesadopcion
 import android.os.Bundle
 import android.view.View
 import android.view.LayoutInflater
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.MenuHost
@@ -46,7 +47,10 @@ class MisAnimalesFragment : Fragment(R.layout.fragment_mis_animales) {
 
                 val card = inflater.inflate(R.layout.card_mis_animales, contenedor, false)
 
+                val imgAnimal = card.findViewById<ImageView>(R.id.imgAnimalMio)
                 val txtNombre = card.findViewById<TextView>(R.id.txtNombreAnimalMio)
+
+                imgAnimal.setImageResource(animal.imagen)
                 txtNombre.text = animal.tipo
 
                 card.setOnClickListener {
@@ -54,7 +58,7 @@ class MisAnimalesFragment : Fragment(R.layout.fragment_mis_animales) {
                         putInt("id", animal.id)
                     }
                     findNavController().navigate(
-                        R.id.action_MisAnimalesFragment_to_DetalleAnimalFragment,
+                        R.id.action_MisAnimalesFragment_to_DetalleAnimalMioFragment,
                         bundle
                     )
                 }

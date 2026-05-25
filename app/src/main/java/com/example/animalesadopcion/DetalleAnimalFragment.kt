@@ -30,15 +30,19 @@ class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
 
         addMenu()
 
+        // BD + VM
         val db = AppDatabase.getDatabase(requireContext())
         val repo = Repositorio(db.usuarioDAO(), db.animalDAO())
         vm = AppVMFactory(repo).create(AppVM::class.java)
 
+        // Usuario actual
         val main = activity as MainActivity
         val usuarioId = main.vm.usuarioActual.value?.id
 
+        // ID del animal recibido
         animalId = arguments?.getInt("id") ?: 0
 
+        // Views
         val img = view.findViewById<ImageView>(R.id.imgDetalleAnimal)
         val txtTipo = view.findViewById<TextView>(R.id.txtNombreDetalle)
         val txtLoc = view.findViewById<TextView>(R.id.txtUbicacionDetalle)
@@ -48,8 +52,10 @@ class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
         val txtFav = view.findViewById<TextView>(R.id.txtFavorito)
         val btnAdoptar = view.findViewById<Button>(R.id.btnAdoptar)
 
+        // Observar animal REAL desde Room
         vm.obtenerAnimal(animalId).observe(viewLifecycleOwner) { animal ->
 
+            // Mostrar datos
             img.setImageResource(animal.imagen)
             txtTipo.text = animal.tipo
             txtLoc.text = animal.localizacion
@@ -57,9 +63,11 @@ class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
             txtEstado.text = animal.estado
             txtInfo.text = "${animal.tipo} en estado ${animal.estado}. Ubicado en ${animal.localizacion}."
 
+            // Estado del favorito
             var esFavorito = animal.favoritoDe == usuarioId
             txtFav.text = if (esFavorito) "♥" else "♡"
 
+            // FAVORITO
             txtFav.setOnClickListener {
                 if (usuarioId == null) {
                     Toast.makeText(requireContext(), "Inicia sesión", Toast.LENGTH_SHORT).show()
@@ -78,12 +86,14 @@ class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
                 }
             }
 
+            // ADOPTAR
             btnAdoptar.setOnClickListener {
                 if (usuarioId == null) {
                     Toast.makeText(requireContext(), "Inicia sesión", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
+                //Al adoptar → se borra de favoritos automáticamente
                 val adoptado = animal.copy(
                     adoptadoPor = usuarioId,
                     favoritoDe = null
