@@ -33,56 +33,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <EditText
-            android:id="@+id/edtTipo"
+        <Spinner
+            android:id="@+id/spinnerTipo"
             android:layout_width="200dp"
             android:layout_height="48dp"
-            android:hint="Tipo"
-            android:textColorHint="#5A000B"
-            android:textColor="#5A000B"
-            android:textSize="15sp"
+            android:background="@drawable/fondo_input_azul"
             android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:background="@drawable/fondo_input_azul" />
+            android:paddingEnd="20dp" />
 
-        <EditText
-            android:id="@+id/edtSexo"
+        <Spinner
+            android:id="@+id/spinnerSexo"
             android:layout_width="200dp"
             android:layout_height="48dp"
             android:layout_marginTop="24dp"
-            android:hint="Sexo"
-            android:textColorHint="#5A000B"
-            android:textColor="#5A000B"
-            android:textSize="15sp"
+            android:background="@drawable/fondo_input_azul"
             android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:background="@drawable/fondo_input_azul" />
+            android:paddingEnd="20dp"/>
 
-        <EditText
-            android:id="@+id/edtEstado"
+        <Spinner
+            android:id="@+id/spinnerEstado"
             android:layout_width="200dp"
             android:layout_height="48dp"
             android:layout_marginTop="24dp"
-            android:hint="Estado"
-            android:textColorHint="#5A000B"
-            android:textColor="#5A000B"
-            android:textSize="15sp"
+            android:background="@drawable/fondo_input_azul"
             android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:background="@drawable/fondo_input_azul" />
+            android:paddingEnd="20dp"/>
 
-        <EditText
-            android:id="@+id/edtLocalizacion"
+        <Spinner
+            android:id="@+id/spinnerLocalizacion"
             android:layout_width="200dp"
             android:layout_height="48dp"
             android:layout_marginTop="24dp"
-            android:hint="Localizacion"
-            android:textColorHint="#5A000B"
-            android:textColor="#5A000B"
-            android:textSize="15sp"
+            android:background="@drawable/fondo_input_azul"
             android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:background="@drawable/fondo_input_azul" />
+            android:paddingEnd="20dp"/>
+
+
 
         <Button
             android:id="@+id/btnSalvar"
