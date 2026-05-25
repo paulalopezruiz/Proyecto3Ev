@@ -16,7 +16,6 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.navigation.fragment.findNavController
 
-
 class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,14 +31,20 @@ class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
         val txtFavorito = view.findViewById<TextView>(R.id.txtFavorito)
         val btnAdoptar = view.findViewById<Button>(R.id.btnAdoptar)
 
-        imgDetalleAnimal.setImageResource(R.drawable.perrito_login)
+        val tipo = arguments?.getString("tipo") ?: "Animal"
+        val sexo = arguments?.getString("sexo") ?: "No indicado"
+        val estado = arguments?.getString("estado") ?: "Sin estado"
+        val localizacion = arguments?.getString("localizacion") ?: "Sin ubicación"
+        val imagen = arguments?.getInt("imagen") ?: R.drawable.perrito_login
 
-        txtNombreDetalle.text = "Luna"
-        txtUbicacionDetalle.text = "Madrid"
-        txtSexoDetalle.text = "Hembra"
-        txtEdadDetalle.text = "2 años"
-        txtPesoDetalle.text = "8 kg"
-        txtInformacionDetalle.text = "Luna es una perrita tranquila..."
+        imgDetalleAnimal.setImageResource(imagen)
+
+        txtNombreDetalle.text = tipo
+        txtUbicacionDetalle.text = localizacion
+        txtSexoDetalle.text = sexo
+        txtEdadDetalle.text = estado
+        txtPesoDetalle.text = "-"
+        txtInformacionDetalle.text = "$tipo en estado: $estado. Se encuentra en $localizacion."
 
         var favorito = false
 
@@ -85,9 +90,14 @@ class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")
                             .setMessage("¿Estás seguro de que quieres salir de la aplicación?")
-                            .setPositiveButton("Sí") { _, _ -> requireActivity().finish() }
-                            .setNegativeButton("No") { d, _ -> d.dismiss() }
+                            .setPositiveButton("Sí") { _, _ ->
+                                requireActivity().finish()
+                            }
+                            .setNegativeButton("No") { dialog, _ ->
+                                dialog.dismiss()
+                            }
                             .show()
+
                         true
                     }
 

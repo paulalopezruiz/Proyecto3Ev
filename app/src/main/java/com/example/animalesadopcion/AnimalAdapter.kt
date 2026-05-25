@@ -8,8 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.animalesadopcion.BBDD.Animal
 
-class AnimalAdapter(private val listaAnimales: List<Animal>) :
-    RecyclerView.Adapter<AnimalAdapter.AnimalViewHolder>() {
+class AnimalAdapter(
+    private val listaAnimales: List<Animal>,
+    private val onClickAnimal: (Animal) -> Unit
+) : RecyclerView.Adapter<AnimalAdapter.AnimalViewHolder>() {
 
     class AnimalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imgAnimal: ImageView = itemView.findViewById(R.id.imgAnimal)
@@ -32,6 +34,10 @@ class AnimalAdapter(private val listaAnimales: List<Animal>) :
         holder.txtNombreAnimal.text = animal.tipo
         holder.txtSexoAnimal.text = animal.sexo
         holder.txtEdadAnimal.text = animal.localizacion
+
+        holder.itemView.setOnClickListener {
+            onClickAnimal(animal)
+        }
     }
 
     override fun getItemCount(): Int {

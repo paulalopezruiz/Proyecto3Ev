@@ -27,13 +27,27 @@ class FavoritosFragment : Fragment(R.layout.fragment_favoritos) {
             GridLayoutManager(requireContext(), 2)
 
         val listaFavoritos = listOf(
-            Animal(0, "Perro", "Femenino", "En adopción", "Madrid", R.drawable.perrito_login),
-            Animal(0, "Gato", "Masculino", "En adopción", "Valencia", R.drawable.perrito_login),
-            Animal(0, "Perro", "Masculino", "Encontrado", "Sevilla", R.drawable.perrito_login),
+            Animal(0, "Perro", "Hembra", "En adopción", "Madrid", R.drawable.perrito_login),
+            Animal(0, "Gato", "Macho", "En adopción", "Valencia", R.drawable.perrito_login),
+            Animal(0, "Perro", "Macho", "Encontrado", "Sevilla", R.drawable.perrito_login),
             Animal(0, "Pájaro", "No conocido", "Perdido", "Madrid", R.drawable.perrito_login)
         )
 
-        recyclerFavoritos.adapter = AnimalAdapter(listaFavoritos)
+        recyclerFavoritos.adapter = AnimalAdapter(listaFavoritos) { animal ->
+
+            val bundle = Bundle().apply {
+                putString("tipo", animal.tipo)
+                putString("sexo", animal.sexo)
+                putString("estado", animal.estado)
+                putString("localizacion", animal.localizacion)
+                putInt("imagen", animal.imagen)
+            }
+
+            findNavController().navigate(
+                R.id.action_FavoritosFragment_to_DetalleAnimalFragment,
+                bundle
+            )
+        }
 
         addMenu()
     }

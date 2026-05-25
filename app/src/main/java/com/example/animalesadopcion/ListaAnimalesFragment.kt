@@ -35,7 +35,21 @@ class ListaAnimalesFragment : Fragment(R.layout.fragment_lista_animales) {
             Animal(0, "Gato", "Macho", "Encontrado", "Madrid", R.drawable.perrito_login)
         )
 
-        recyclerAnimales.adapter = AnimalAdapter(listaAnimales)
+        recyclerAnimales.adapter = AnimalAdapter(listaAnimales) { animal ->
+
+            val bundle = Bundle().apply {
+                putString("tipo", animal.tipo)
+                putString("sexo", animal.sexo)
+                putString("estado", animal.estado)
+                putString("localizacion", animal.localizacion)
+                putInt("imagen", animal.imagen)
+            }
+
+            findNavController().navigate(
+                R.id.action_ListaAnimalesFragment_to_DetalleAnimalFragment,
+                bundle
+            )
+        }
 
         addMenu()
     }

@@ -55,8 +55,6 @@
         <action
             android:id="@+id/action_RegistroFragment_to_LoginFragment"
             app:destination="@id/LoginFragment" />
-
-
     </fragment>
 
     <fragment
