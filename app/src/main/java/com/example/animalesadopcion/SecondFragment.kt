@@ -11,9 +11,13 @@ class SecondFragment : Fragment(R.layout.fragment_second) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Ir a pantalla iniciar sesión
         val btnIniciarSesion = view.findViewById<Button>(R.id.btnIniciarSesion)
+
+        // Ir a pantalla  registro
         val btnRegistrarse = view.findViewById<Button>(R.id.btnRegistrarse)
 
+        // Navegación hacia LoginFragment
         btnIniciarSesion.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_LoginFragment)
         }

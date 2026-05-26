@@ -13,7 +13,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.animalesadopcion.BBDD.Animal
 import com.example.animalesadopcion.BBDD.AppDatabase
 import com.example.animalesadopcion.BBDD.Repositorio
 import com.example.animalesadopcion.ui.AppVM
@@ -30,19 +29,16 @@ class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
 
         addMenu()
 
-        // BD + VM
         val db = AppDatabase.getDatabase(requireContext())
         val repo = Repositorio(db.usuarioDAO(), db.animalDAO())
         vm = AppVMFactory(repo).create(AppVM::class.java)
 
-        // Usuario actual
         val main = activity as MainActivity
         val usuarioId = main.vm.usuarioActual.value?.id
 
-        // ID del animal recibido
+        // Recibimos el id del animal desde la pantalla anterior
         animalId = arguments?.getInt("id") ?: 0
 
-        // Views
         val img = view.findViewById<ImageView>(R.id.imgDetalleAnimal)
         val txtTipo = view.findViewById<TextView>(R.id.txtNombreDetalle)
         val txtLoc = view.findViewById<TextView>(R.id.txtUbicacionDetalle)
@@ -52,27 +48,34 @@ class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
         val txtFav = view.findViewById<TextView>(R.id.txtFavorito)
         val btnAdoptar = view.findViewById<Button>(R.id.btnAdoptar)
 
-        // Observar animal REAL desde Room
+        // Si el animal cambia en la BD, la pantalla se actualiza automáticamente.
         vm.obtenerAnimal(animalId).observe(viewLifecycleOwner) { animal ->
 
-            // Mostrar datos
+            // Mostrar datos del animal
             img.setImageResource(animal.imagen)
             txtTipo.text = animal.tipo
             txtLoc.text = animal.localizacion
             txtSexo.text = animal.sexo
             txtEstado.text = animal.estado
-            txtInfo.text = "${animal.tipo} en estado ${animal.estado}. Ubicado en ${animal.localizacion}."
 
-            // Estado del favorito
+
+            txtInfo.text = if (animal.informacion.isNotBlank()) {
+                animal.informacion
+            } else {
+                "${animal.tipo} en estado ${animal.estado}. Ubicado en ${animal.localizacion}."
+            }
+
+
             var esFavorito = animal.favoritoDe == usuarioId
             txtFav.text = if (esFavorito) "♥" else "♡"
 
-            // FAVORITO
+            // Botón de favorito
             txtFav.setOnClickListener {
                 if (usuarioId == null) {
                     Toast.makeText(requireContext(), "Inicia sesión", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
+
 
                 esFavorito = !esFavorito
                 txtFav.text = if (esFavorito) "♥" else "♡"
@@ -86,14 +89,14 @@ class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
                 }
             }
 
-            // ADOPTAR
+            // Botón de adoptar
             btnAdoptar.setOnClickListener {
                 if (usuarioId == null) {
                     Toast.makeText(requireContext(), "Inicia sesión", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
-                //Al adoptar → se borra de favoritos automáticamente
+                // Al adoptar, guardamos el id del usuario en adoptadoPor y lo quitamos de favoritos.
                 val adoptado = animal.copy(
                     adoptadoPor = usuarioId,
                     favoritoDe = null
@@ -101,13 +104,20 @@ class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
 
                 viewLifecycleOwner.lifecycleScope.launch {
                     vm.actualizar(adoptado)
-                    Toast.makeText(requireContext(), "¡Has adoptado a ${animal.tipo}!", Toast.LENGTH_SHORT).show()
+
+                    Toast.makeText(
+                        requireContext(),
+                        "¡Has adoptado a ${animal.tipo}!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                     findNavController().navigate(R.id.ListaAnimalesFragment)
                 }
             }
         }
     }
 
+    // Menú superior de la toolbar.
     private fun addMenu() {
         val menuHost: MenuHost = requireActivity()
 
@@ -121,23 +131,35 @@ class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
                 val navController = findNavController()
 
                 return when (menuItem.itemId) {
+
+                    // Volver a la pantalla principal
                     R.id.menu_home -> {
                         navController.navigate(R.id.EleccionFragment)
                         true
                     }
+
+                    // Ir al perfil
                     R.id.menu_profile -> {
                         navController.navigate(R.id.PerfilFragment)
                         true
                     }
+
+                    // Salir de la app
                     R.id.menu_logout -> {
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")
                             .setMessage("¿Seguro?")
-                            .setPositiveButton("Sí") { _, _ -> requireActivity().finish() }
-                            .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
+                            .setPositiveButton("Sí") { _, _ ->
+                                requireActivity().finish()
+                            }
+                            .setNegativeButton("No") { dialog, _ ->
+                                dialog.dismiss()
+                            }
                             .show()
+
                         true
                     }
+
                     else -> false
                 }
             }

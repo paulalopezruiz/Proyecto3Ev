@@ -26,7 +26,9 @@ class MisAnimalesFragment : Fragment(R.layout.fragment_mis_animales) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Añadimos el menú superior
         addMenu()
+
 
         val main = activity as MainActivity
         val usuarioId = main.vm.usuarioActual.value?.id ?: return
@@ -43,10 +45,13 @@ class MisAnimalesFragment : Fragment(R.layout.fragment_mis_animales) {
 
             val inflater = LayoutInflater.from(requireContext())
 
+            // Recorer lista de animales adoptados
             lista.forEach { animal ->
 
+                // Crear tarjeta para cada animal
                 val card = inflater.inflate(R.layout.card_mis_animales, contenedor, false)
 
+                // Referencias a las vistas de la tarjeta
                 val imgAnimal = card.findViewById<ImageView>(R.id.imgAnimalMio)
                 val txtNombre = card.findViewById<TextView>(R.id.txtNombreAnimalMio)
 
@@ -57,22 +62,26 @@ class MisAnimalesFragment : Fragment(R.layout.fragment_mis_animales) {
                     val bundle = Bundle().apply {
                         putInt("id", animal.id)
                     }
+
                     findNavController().navigate(
                         R.id.action_MisAnimalesFragment_to_DetalleAnimalMioFragment,
                         bundle
                     )
                 }
 
+                // Añadir tarjeta al contenedor
                 contenedor.addView(card)
             }
         }
     }
 
+    // Menú superior de la toolbar
     private fun addMenu() {
         val menuHost: MenuHost = requireActivity()
 
         menuHost.addMenuProvider(object : MenuProvider {
 
+            // Cargamos el menú general: Home, Perfil y Salir
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_general, menu)
             }
@@ -81,23 +90,35 @@ class MisAnimalesFragment : Fragment(R.layout.fragment_mis_animales) {
                 val navController = findNavController()
 
                 return when (menuItem.itemId) {
+
+                    // Volver a la pantalla principal
                     R.id.menu_home -> {
                         navController.navigate(R.id.EleccionFragment)
                         true
                     }
+
+                    // Ir al perfil
                     R.id.menu_profile -> {
                         navController.navigate(R.id.PerfilFragment)
                         true
                     }
+
+                    // Salir de la app con confirmación
                     R.id.menu_logout -> {
                         androidx.appcompat.app.AlertDialog.Builder(requireContext())
                             .setTitle("Salir")
                             .setMessage("¿Estás seguro de que quieres salir de la aplicación?")
-                            .setPositiveButton("Sí") { _, _ -> requireActivity().finish() }
-                            .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
+                            .setPositiveButton("Sí") { _, _ ->
+                                requireActivity().finish()
+                            }
+                            .setNegativeButton("No") { dialog, _ ->
+                                dialog.dismiss()
+                            }
                             .show()
+
                         true
                     }
+
                     else -> false
                 }
             }

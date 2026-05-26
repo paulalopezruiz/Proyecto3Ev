@@ -11,6 +11,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Flecha de la primera pantalla.
         val flecha = view.findViewById<TextView>(R.id.flecha)
 
         flecha.setOnClickListener {

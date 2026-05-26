@@ -20,35 +20,59 @@ class RegistroFragment : Fragment(R.layout.fragment_registro) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Inicializar ViewModel
         val db = AppDatabase.getDatabase(requireContext())
         val repo = Repositorio(db.usuarioDAO(), db.animalDAO())
         vm = AppVMFactory(repo).create(AppVM::class.java)
 
+        // Referencias a los campos del formulario
         val edtNombre = view.findViewById<EditText>(R.id.edtNombreRegistro)
         val edtTelefono = view.findViewById<EditText>(R.id.edtEmailRegistro)
         val edtPassword = view.findViewById<EditText>(R.id.edtPasswordRegistro)
         val btnEstoyListo = view.findViewById<Button>(R.id.btnEstoyListo)
 
         btnEstoyListo.setOnClickListener {
+
+            // Recoger datos escritos por el usuario
             val nombre = edtNombre.text.toString()
             val telefono = edtTelefono.text.toString()
             val password = edtPassword.text.toString()
 
             if (nombre.isEmpty() || telefono.isEmpty() || password.isEmpty()) {
-                Toast.makeText(requireContext(), "Rellena todos los campos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Rellena todos los campos",
+                    Toast.LENGTH_SHORT
+                ).show()
+
                 return@setOnClickListener
             }
 
-            // Comprobar que el teléfono son solo números
             if (!telefono.all { it.isDigit() }) {
-                Toast.makeText(requireContext(), "El teléfono solo puede contener números", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "El teléfono solo puede contener números",
+                    Toast.LENGTH_SHORT
+                ).show()
+
                 return@setOnClickListener
             }
 
             viewLifecycleOwner.lifecycleScope.launch {
-                vm.registrar(Usuario(nombre = nombre, telefono = telefono, password = password))
-                Toast.makeText(requireContext(), "Registro completado", Toast.LENGTH_SHORT).show()
+
+                val usuario = Usuario(
+                    nombre = nombre,
+                    telefono = telefono,
+                    password = password
+                )
+
+                vm.registrar(usuario)
+
+                Toast.makeText(
+                    requireContext(),
+                    "Registro completado",
+                    Toast.LENGTH_SHORT
+                ).show()
+
                 findNavController().navigate(R.id.action_RegistroFragment_to_LoginFragment)
             }
         }

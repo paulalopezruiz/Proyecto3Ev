@@ -24,6 +24,7 @@ class DetalleAnimalMioFragment : Fragment(R.layout.fragment_detalle_animal_mio) 
 
     private lateinit var vm: AppVM
     private var animalId = 0
+
     private var editMode = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,11 +50,13 @@ class DetalleAnimalMioFragment : Fragment(R.layout.fragment_detalle_animal_mio) 
 
         vm.obtenerAnimal(animalId).observe(viewLifecycleOwner) { animal ->
 
+            // Mostramos info del animal adoptado
             imgAnimal.setImageResource(animal.imagen)
             txtNombre.text = animal.tipo
             txtUbicacion.text = animal.localizacion
             txtSexo.text = animal.sexo
             txtEdad.text = animal.estado
+
 
             txtInformacion.text = if (animal.informacion.isNotBlank()) {
                 animal.informacion
@@ -61,12 +64,14 @@ class DetalleAnimalMioFragment : Fragment(R.layout.fragment_detalle_animal_mio) 
                 "Información del animal"
             }
 
+            // Botón del lápiz/check para editar y guardar
             txtEditar.setOnClickListener {
 
                 if (!editMode) {
                     editMode = true
                     txtEditar.text = "✔"
 
+                    // Convertimos los TextView en campos editables
                     activarEdicion(txtNombre)
                     activarEdicion(txtUbicacion)
                     activarEdicion(txtSexo)
@@ -91,6 +96,7 @@ class DetalleAnimalMioFragment : Fragment(R.layout.fragment_detalle_animal_mio) 
 
                     viewLifecycleOwner.lifecycleScope.launch {
                         vm.actualizar(actualizado)
+
                         Toast.makeText(
                             requireContext(),
                             "Cambios guardados",
@@ -104,6 +110,7 @@ class DetalleAnimalMioFragment : Fragment(R.layout.fragment_detalle_animal_mio) 
         }
     }
 
+
     private fun activarEdicion(textView: TextView) {
         textView.isFocusableInTouchMode = true
         textView.isFocusable = true
@@ -113,6 +120,7 @@ class DetalleAnimalMioFragment : Fragment(R.layout.fragment_detalle_animal_mio) 
         textView.setPadding(16, 16, 16, 16)
     }
 
+    // Menú superior de la toolbar
     private fun addMenu() {
         val menuHost: MenuHost = requireActivity()
 
@@ -127,16 +135,19 @@ class DetalleAnimalMioFragment : Fragment(R.layout.fragment_detalle_animal_mio) 
 
                 return when (menuItem.itemId) {
 
+                    // Volver a Home
                     R.id.menu_home -> {
                         navController.navigate(R.id.EleccionFragment)
                         true
                     }
 
+                    // Ir al perfil
                     R.id.menu_profile -> {
                         navController.navigate(R.id.PerfilFragment)
                         true
                     }
 
+                    // Salir de la app
                     R.id.menu_logout -> {
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")

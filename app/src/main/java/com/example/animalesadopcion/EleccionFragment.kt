@@ -18,6 +18,7 @@ class EleccionFragment : Fragment(R.layout.fragment_eleccion) {
         super.onViewCreated(view, savedInstanceState)
 
         val txtEncontrado = view.findViewById<android.widget.TextView>(R.id.txtEncontrado)
+
         val btnQuieroAdoptar = view.findViewById<android.widget.TextView>(R.id.btnQuieroAdoptar)
 
         txtEncontrado.setOnClickListener {
@@ -28,6 +29,7 @@ class EleccionFragment : Fragment(R.layout.fragment_eleccion) {
             findNavController().navigate(R.id.action_EleccionFragment_to_ListaAnimalesFragment)
         }
 
+        // Menú superior
         val menuHost: MenuHost = requireActivity()
 
         menuHost.addMenuProvider(object : MenuProvider {
@@ -37,18 +39,18 @@ class EleccionFragment : Fragment(R.layout.fragment_eleccion) {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-
                 val navController = findNavController()
 
                 return when (menuItem.itemId) {
 
+                    // Ir al perfil del usuario
                     R.id.menu_profile -> {
                         navController.navigate(R.id.PerfilFragment)
                         true
                     }
 
+                    // Salir de la app con confirmación
                     R.id.menu_logout -> {
-
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")
                             .setMessage("¿Estás seguro de que quieres salir de la aplicación?")

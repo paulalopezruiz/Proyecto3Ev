@@ -53,6 +53,7 @@ class FavoritosFragment : Fragment(R.layout.fragment_favoritos) {
         val repo = Repositorio(db.usuarioDAO(), db.animalDAO())
         vm = AppVMFactory(repo).create(AppVM::class.java)
 
+        // Botones de filtro
         val btnPerro = view.findViewById<View>(R.id.btnPerro)
         val btnGato = view.findViewById<View>(R.id.btnGato)
         val btnPajaro = view.findViewById<View>(R.id.btnPajaro)
@@ -106,6 +107,7 @@ class FavoritosFragment : Fragment(R.layout.fragment_favoritos) {
 
         menuHost.addMenuProvider(object : MenuProvider {
 
+            // Cargamos el xml del menú general: Home, Perfil y Salir
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_general, menu)
             }
@@ -114,16 +116,19 @@ class FavoritosFragment : Fragment(R.layout.fragment_favoritos) {
                 val navController = findNavController()
 
                 return when (menuItem.itemId) {
+
                     R.id.menu_home -> {
                         navController.navigate(R.id.EleccionFragment)
                         true
                     }
 
+                    // Ir al perfil
                     R.id.menu_profile -> {
                         navController.navigate(R.id.PerfilFragment)
                         true
                     }
 
+                    // Salir de la aplicación
                     R.id.menu_logout -> {
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")
@@ -138,6 +143,7 @@ class FavoritosFragment : Fragment(R.layout.fragment_favoritos) {
 
                         true
                     }
+
 
                     else -> false
                 }

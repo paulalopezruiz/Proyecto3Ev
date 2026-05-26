@@ -20,7 +20,10 @@ import com.example.animalesadopcion.ui.AppVMFactory
 class MainActivity : AppCompatActivity() {
 
     private val db by lazy { AppDatabase.getDatabase(this) }
+
     private val repo by lazy { Repositorio(db.usuarioDAO(), db.animalDAO()) }
+
+
     val vm: AppVM by viewModels { AppVMFactory(repo) }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -28,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -42,7 +46,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
+            supportFragmentManager.findFragmentById(
+                R.id.nav_host_fragment_content_main
+            ) as NavHostFragment
 
         val navController = navHostFragment.navController
 

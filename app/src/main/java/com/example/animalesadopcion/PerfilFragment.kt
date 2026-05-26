@@ -6,7 +6,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -19,13 +18,18 @@ class PerfilFragment : Fragment(R.layout.fragment_perfil) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Ver animales adoptados
         val btnMiFamilia = view.findViewById<Button>(R.id.btnMiFamilia)
+
+        // Ver  animales favoritos
         val btnFavoritos = view.findViewById<Button>(R.id.btnFavoritosPerfil)
 
+        // Navega a la pantalla de animales adoptados
         btnMiFamilia.setOnClickListener {
             findNavController().navigate(R.id.MisAnimalesFragment)
         }
 
+        // Navega a la pantalla favoritos
         btnFavoritos.setOnClickListener {
             findNavController().navigate(R.id.FavoritosFragment)
         }
@@ -34,23 +38,24 @@ class PerfilFragment : Fragment(R.layout.fragment_perfil) {
 
         menuHost.addMenuProvider(object : MenuProvider {
 
+
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_profile, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-
                 val navController = findNavController()
 
                 return when (menuItem.itemId) {
 
+                    // Volver a la pantalla principal
                     R.id.menu_home -> {
                         navController.navigate(R.id.EleccionFragment)
                         true
                     }
 
+                    // Salir de la aplicación
                     R.id.menu_logout -> {
-
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")
                             .setMessage("¿Estás seguro de que quieres salir de la aplicación?")

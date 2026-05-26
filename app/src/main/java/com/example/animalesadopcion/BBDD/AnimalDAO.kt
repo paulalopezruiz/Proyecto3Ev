@@ -3,6 +3,7 @@ package com.example.animalesadopcion.BBDD
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
+// Consultas de la tabla animales
 @Dao
 interface AnimalDAO {
 
@@ -26,8 +27,6 @@ interface AnimalDAO {
 
     @Delete
     fun borrar(animal: Animal): Int
-
     @Query("SELECT * FROM animales WHERE id = :id")
     fun obtenerAnimal(id: Int): Flow<Animal>
-
 }

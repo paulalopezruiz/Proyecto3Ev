@@ -21,34 +21,57 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val db = AppDatabase.getDatabase(requireContext())
         val repo = Repositorio(db.usuarioDAO(), db.animalDAO())
         vm = AppVMFactory(repo).create(AppVM::class.java)
 
+        // Referencias a los campos del XML
         val edtNombre = view.findViewById<EditText>(R.id.edtNombreLogin)
         val edtPassword = view.findViewById<EditText>(R.id.edtPasswordLogin)
         val btnEntrar = view.findViewById<Button>(R.id.btnEntrar)
 
         btnEntrar.setOnClickListener {
+
+            // Recogemos lo que ha escrito el usuario
             val nombre = edtNombre.text.toString().trim()
             val password = edtPassword.text.toString().trim()
 
             if (nombre.isEmpty() || password.isEmpty()) {
-                Toast.makeText(requireContext(), "Rellena todos los campos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Rellena todos los campos",
+                    Toast.LENGTH_SHORT
+                ).show()
+
                 return@setOnClickListener
             }
 
             viewLifecycleOwner.lifecycleScope.launch {
+
                 val usuario = vm.login(nombre, password)
 
                 if (usuario != null) {
+
+
                     val main = activity as MainActivity
                     main.vm.setUsuarioActual(usuario)
 
-                    Toast.makeText(requireContext(), "Bienvenido ${usuario.nombre}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Bienvenido ${usuario.nombre}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                     findNavController().navigate(R.id.action_LoginFragment_to_EleccionFragment)
+
                 } else {
-                    Toast.makeText(requireContext(), "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+
+                    Toast.makeText(
+                        requireContext(),
+                        "Usuario o contraseña incorrectos",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
