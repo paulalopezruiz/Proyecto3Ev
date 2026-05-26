@@ -11,6 +11,7 @@ data class Animal(
     val estado: String,
     val localizacion: String,
     val imagen: Int,
-    val adoptadoPor: Int? = null,   // id del usuario
-    val favoritoDe: Int? = null     // id del usuario
+    val informacion: String = "",
+    val adoptadoPor: Int? = null,
+    val favoritoDe: Int? = null
 )

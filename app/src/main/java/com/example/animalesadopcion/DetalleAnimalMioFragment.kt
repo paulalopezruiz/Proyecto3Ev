@@ -20,8 +20,7 @@ import com.example.animalesadopcion.ui.AppVMFactory
 import kotlinx.coroutines.launch
 import android.text.InputType
 
-class DetalleAnimalMioFragment :
-    Fragment(R.layout.fragment_detalle_animal_mio) {
+class DetalleAnimalMioFragment : Fragment(R.layout.fragment_detalle_animal_mio) {
 
     private lateinit var vm: AppVM
     private var animalId = 0
@@ -46,7 +45,6 @@ class DetalleAnimalMioFragment :
         val txtInformacion = view.findViewById<TextView>(R.id.txtInformacionAnimalMio)
         val txtEditar = view.findViewById<TextView>(R.id.txtEditarAnimalMio)
 
-        // Guardamos el fondo original del cuadro de información
         val fondoInfoOriginal = txtInformacion.background
 
         vm.obtenerAnimal(animalId).observe(viewLifecycleOwner) { animal ->
@@ -56,12 +54,16 @@ class DetalleAnimalMioFragment :
             txtUbicacion.text = animal.localizacion
             txtSexo.text = animal.sexo
             txtEdad.text = animal.estado
-            txtInformacion.text = "Información del animal"
+
+            txtInformacion.text = if (animal.informacion.isNotBlank()) {
+                animal.informacion
+            } else {
+                "Información del animal"
+            }
 
             txtEditar.setOnClickListener {
 
                 if (!editMode) {
-                    // ACTIVAR MODO EDICIÓN
                     editMode = true
                     txtEditar.text = "✔"
 
@@ -69,30 +71,32 @@ class DetalleAnimalMioFragment :
                     activarEdicion(txtUbicacion)
                     activarEdicion(txtSexo)
                     activarEdicion(txtEdad)
-
-                    // 🔥 Activar edición en información
                     activarEdicion(txtInformacion)
-                    txtInformacion.background = null  // quitar fondo decorativo
+
+                    txtInformacion.background = null
 
                 } else {
-                    // GUARDAR CAMBIOS
                     editMode = false
                     txtEditar.text = "✎"
 
-                    // Restaurar fondo decorativo
                     txtInformacion.background = fondoInfoOriginal
 
                     val actualizado = animal.copy(
                         tipo = txtNombre.text.toString(),
                         localizacion = txtUbicacion.text.toString(),
                         sexo = txtSexo.text.toString(),
-                        estado = txtEdad.text.toString()
-                        // Información NO se guarda porque no existe en la BD
+                        estado = txtEdad.text.toString(),
+                        informacion = txtInformacion.text.toString()
                     )
 
                     viewLifecycleOwner.lifecycleScope.launch {
                         vm.actualizar(actualizado)
-                        Toast.makeText(requireContext(), "Cambios guardados", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "Cambios guardados",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
                         findNavController().navigate(R.id.MisAnimalesFragment)
                     }
                 }
@@ -110,7 +114,6 @@ class DetalleAnimalMioFragment :
     }
 
     private fun addMenu() {
-
         val menuHost: MenuHost = requireActivity()
 
         menuHost.addMenuProvider(object : MenuProvider {
@@ -120,7 +123,6 @@ class DetalleAnimalMioFragment :
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-
                 val navController = findNavController()
 
                 return when (menuItem.itemId) {
@@ -139,9 +141,14 @@ class DetalleAnimalMioFragment :
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")
                             .setMessage("¿Estás seguro de que quieres salir de la aplicación?")
-                            .setPositiveButton("Sí") { _, _ -> requireActivity().finish() }
-                            .setNegativeButton("No") { d, _ -> d.dismiss() }
+                            .setPositiveButton("Sí") { _, _ ->
+                                requireActivity().finish()
+                            }
+                            .setNegativeButton("No") { dialog, _ ->
+                                dialog.dismiss()
+                            }
                             .show()
+
                         true
                     }
 

@@ -14,7 +14,9 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
         android:scaleType="centerCrop"
-        android:background="@drawable/fondo_gris_card" />
+        android:background="@drawable/fondo_imagen_mis_animales"
+        android:clipToOutline="true"
+        android:contentDescription="Imagen del animal" />
 
     <TextView
         android:id="@+id/txtNombreAnimalMio"
