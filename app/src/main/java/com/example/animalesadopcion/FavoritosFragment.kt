@@ -22,6 +22,10 @@ import com.example.animalesadopcion.ui.AppVMFactory
 class FavoritosFragment : Fragment(R.layout.fragment_favoritos) {
 
     private lateinit var vm: AppVM
+    private lateinit var adapter: AnimalAdapter
+
+    private val filtrosActivos = mutableSetOf<String>()
+    private var listaFavoritos = listOf<Animal>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,21 +36,69 @@ class FavoritosFragment : Fragment(R.layout.fragment_favoritos) {
         val recycler = view.findViewById<RecyclerView>(R.id.recyclerFavoritos)
         recycler.layoutManager = GridLayoutManager(requireContext(), 2)
 
+        adapter = AnimalAdapter(emptyList()) { animal ->
+            val bundle = Bundle().apply {
+                putInt("id", animal.id)
+            }
+
+            findNavController().navigate(
+                R.id.action_FavoritosFragment_to_DetalleAnimalFragment,
+                bundle
+            )
+        }
+
+        recycler.adapter = adapter
+
         val db = AppDatabase.getDatabase(requireContext())
         val repo = Repositorio(db.usuarioDAO(), db.animalDAO())
         vm = AppVMFactory(repo).create(AppVM::class.java)
 
+        val btnPerro = view.findViewById<View>(R.id.btnPerro)
+        val btnGato = view.findViewById<View>(R.id.btnGato)
+        val btnPajaro = view.findViewById<View>(R.id.btnPajaro)
+
+        btnPerro.setOnClickListener {
+            toggleFiltro("Perro", btnPerro)
+        }
+
+        btnGato.setOnClickListener {
+            toggleFiltro("Gato", btnGato)
+        }
+
+        btnPajaro.setOnClickListener {
+            toggleFiltro("Pájaro", btnPajaro)
+        }
+
         vm.favoritos(usuarioId).observe(viewLifecycleOwner) { lista ->
-            recycler.adapter = AnimalAdapter(lista) { animal ->
-                val bundle = Bundle().apply { putInt("id", animal.id) }
-                findNavController().navigate(
-                    R.id.action_FavoritosFragment_to_DetalleAnimalFragment,
-                    bundle
-                )
-            }
+            listaFavoritos = lista
+            aplicarFiltros()
         }
 
         addMenu()
+    }
+
+    private fun toggleFiltro(tipo: String, boton: View) {
+        if (filtrosActivos.contains(tipo)) {
+            filtrosActivos.remove(tipo)
+            boton.alpha = 1f
+        } else {
+            filtrosActivos.add(tipo)
+            boton.alpha = 0.5f
+        }
+
+        aplicarFiltros()
+    }
+
+    private fun aplicarFiltros() {
+        val listaFiltrada = if (filtrosActivos.isEmpty()) {
+            listaFavoritos
+        } else {
+            listaFavoritos.filter { animal ->
+                filtrosActivos.contains(animal.tipo)
+            }
+        }
+
+        adapter.actualizarLista(listaFiltrada)
     }
 
     private fun addMenu() {
