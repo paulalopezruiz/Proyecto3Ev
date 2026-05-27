@@ -37,7 +37,7 @@ class AnimalAdapter(
         return AnimalViewHolder(view)
     }
 
-    // Rellena cada tarjeta con los datos del animal correspondiente
+    // Rellena cada tarjeta con los datos del animal
     override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {
         val animal = listaAnimales[position]
 
