@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,8 +8,7 @@
     android:layout_height="match_parent"
     android:background="#FFE28A">
 
-    <!-- BOTONES SUPERIORES -->
-
+    <!-- Contenedor horizontal con los botones de filtro -->
     <LinearLayout
         android:id="@+id/contenedorBotones"
         android:layout_width="wrap_content"
@@ -19,6 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <!-- Filtro Perro -->
         <Button
             android:id="@+id/btnPerro"
             android:layout_width="100dp"
@@ -32,6 +33,7 @@
             app:strokeColor="#5A000B"
             app:strokeWidth="3dp" />
 
+        <!-- Filtro Gato -->
         <Button
             android:id="@+id/btnGato"
             android:layout_width="100dp"
@@ -46,6 +48,7 @@
             app:strokeColor="#5A000B"
             app:strokeWidth="3dp" />
 
+        <!-- Filtro Pájaro-->
         <Button
             android:id="@+id/btnPajaro"
             android:layout_width="100dp"
@@ -62,8 +65,8 @@
 
     </LinearLayout>
 
-    <!-- RECYCLERVIEW -->
-
+    <!-- RecyclerView tarjetas de animales favoritos.
+         (usa el layout item_animal.xml) -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFavoritos"
         android:layout_width="0dp"

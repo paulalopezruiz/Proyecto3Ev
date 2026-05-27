@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -31,6 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <!-- Nombre -->
         <TextView
             android:id="@+id/txtNombrePerfil"
             android:layout_width="wrap_content"
@@ -40,6 +42,7 @@
             android:textSize="22sp"
             android:textStyle="bold" />
 
+        <!-- Botón para MisAnimalesFragment -->
         <Button
             android:id="@+id/btnMiFamilia"
             android:layout_width="280dp"
@@ -52,6 +55,7 @@
             android:backgroundTint="#75B3FF"
             app:cornerRadius="40dp" />
 
+        <!-- Botón para FavoritosFragment -->
         <Button
             android:id="@+id/btnFavoritosPerfil"
             android:layout_width="280dp"

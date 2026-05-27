@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFE28A">
-
 
     <TextView
         android:id="@+id/txtTituloRegistro"
@@ -21,6 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Contenedor del formulario-->
     <LinearLayout
         android:id="@+id/contenedorRegistro"
         android:layout_width="360dp"
@@ -34,6 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtTituloRegistro">
 
+        <!-- Nombre -->
         <EditText
             android:id="@+id/edtNombreRegistro"
             android:layout_width="220dp"
@@ -45,6 +48,7 @@
             android:textColorHint="#5A000B"
             android:textSize="16sp" />
 
+        <!-- Telefono -->
         <EditText
             android:id="@+id/edtEmailRegistro"
             android:layout_width="220dp"
@@ -53,11 +57,11 @@
             android:background="@drawable/fondo_input"
             android:gravity="center"
             android:hint="Telefono"
-            android:inputType="textEmailAddress"
-            android:textColor="#5A000B"
+            android:inputType="phone"            android:textColor="#5A000B"
             android:textColorHint="#5A000B"
             android:textSize="16sp" />
 
+        <!-- Contraseña -->
         <EditText
             android:id="@+id/edtPasswordRegistro"
             android:layout_width="220dp"
@@ -73,6 +77,7 @@
 
     </LinearLayout>
 
+    <!-- Boton -->
     <Button
         android:id="@+id/btnEstoyListo"
         android:layout_width="220dp"

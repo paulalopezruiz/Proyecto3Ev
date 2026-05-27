@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Pantalla para registrar un animal encontrado.
+     Aquí el usuario elige tipo, sexo, estado y localización mediante Spinners. -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,6 +9,7 @@
     android:layout_height="match_parent"
     android:background="#FFE28A">
 
+    <!-- Título de la pantalla -->
     <TextView
         android:id="@+id/txtEncontrado"
         android:layout_width="wrap_content"
@@ -19,6 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Contenedor azul donde están los campos del formulario -->
     <LinearLayout
         android:id="@+id/contenedorEncontrado"
         android:layout_width="match_parent"
@@ -33,6 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <!-- Spinner para elegir tipo -->
         <Spinner
             android:id="@+id/spinnerTipo"
             android:layout_width="200dp"
@@ -68,8 +74,7 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"/>
 
-
-
+        <!-- Botón -->
         <Button
             android:id="@+id/btnSalvar"
             android:layout_width="200dp"

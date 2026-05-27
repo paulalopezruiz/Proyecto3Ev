@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Animales adoptados por el usuario  -->
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -6,7 +8,7 @@
     android:background="#FFE28A"
     android:importantForAccessibility="no">
 
-
+    <!-- Contenedor donde MisAnimalesFragment añade las tarjetas -->
     <LinearLayout
         android:id="@+id/contenedorMisAnimales"
         android:layout_width="match_parent"

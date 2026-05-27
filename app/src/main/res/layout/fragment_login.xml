@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,6 +8,7 @@
     android:layout_height="match_parent"
     android:background="#FFE28A">
 
+    <!-- Titulo -->
     <TextView
         android:id="@+id/txtHola"
         android:layout_width="wrap_content"
@@ -20,6 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Contenedor azul del formulario-->
     <LinearLayout
         android:id="@+id/contenedorLogin"
         android:layout_width="360dp"
@@ -33,6 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtHola">
 
+        <!-- Nombre -->
         <EditText
             android:id="@+id/edtNombreLogin"
             android:layout_width="220dp"
@@ -44,6 +49,7 @@
             android:textColorHint="#5A000B"
             android:textSize="16sp" />
 
+        <!-- Contraseña -->
         <EditText
             android:id="@+id/edtPasswordLogin"
             android:layout_width="220dp"
@@ -59,6 +65,7 @@
 
     </LinearLayout>
 
+    <!-- Botón -->
     <Button
         android:id="@+id/btnEntrar"
         android:layout_width="220dp"
