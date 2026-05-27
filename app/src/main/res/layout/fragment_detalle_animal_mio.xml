@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Pantalla de detalle de un animal adoptado por el usuario.
-     Desde aquí se pueden ver y editar sus datos. -->
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,7 +8,6 @@
     android:layout_height="match_parent"
     android:background="#FFE28A">
 
-    <!-- Imagen grande del animal -->
     <ImageView
         android:id="@+id/imgDetalleAnimalMio"
         android:layout_width="0dp"

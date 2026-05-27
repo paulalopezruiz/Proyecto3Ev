@@ -117,7 +117,7 @@ class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
         }
     }
 
-    // Menú superior de la toolbar.
+    // Menu
     private fun addMenu() {
         val menuHost: MenuHost = requireActivity()
 
@@ -144,7 +144,7 @@ class DetalleAnimalFragment : Fragment(R.layout.fragment_detalle_animal) {
                         true
                     }
 
-                    // Salir de la app
+                    // Salir
                     R.id.menu_logout -> {
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")

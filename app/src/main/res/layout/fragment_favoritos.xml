@@ -65,8 +65,7 @@
 
     </LinearLayout>
 
-    <!-- RecyclerView tarjetas de animales favoritos.
-         (usa el layout item_animal.xml) -->
+    <!-- RecyclerView tarjetas de animales favoritos (usa el layout item_animal.xml) -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFavoritos"
         android:layout_width="0dp"

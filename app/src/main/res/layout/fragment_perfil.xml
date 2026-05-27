@@ -42,7 +42,6 @@
             android:textSize="22sp"
             android:textStyle="bold" />
 
-        <!-- Botón para MisAnimalesFragment -->
         <Button
             android:id="@+id/btnMiFamilia"
             android:layout_width="280dp"
@@ -55,7 +54,6 @@
             android:backgroundTint="#75B3FF"
             app:cornerRadius="40dp" />
 
-        <!-- Botón para FavoritosFragment -->
         <Button
             android:id="@+id/btnFavoritosPerfil"
             android:layout_width="280dp"
