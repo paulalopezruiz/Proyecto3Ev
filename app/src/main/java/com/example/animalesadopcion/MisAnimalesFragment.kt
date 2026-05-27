@@ -26,9 +26,7 @@ class MisAnimalesFragment : Fragment(R.layout.fragment_mis_animales) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Añadimos el menú superior
         addMenu()
-
 
         val main = activity as MainActivity
         val usuarioId = main.vm.usuarioActual.value?.id ?: return
@@ -45,7 +43,7 @@ class MisAnimalesFragment : Fragment(R.layout.fragment_mis_animales) {
 
             val inflater = LayoutInflater.from(requireContext())
 
-            // Recorer lista de animales adoptados
+            // Recorrer lista de animales adoptados
             lista.forEach { animal ->
 
                 // Crear tarjeta para cada animal
@@ -75,13 +73,13 @@ class MisAnimalesFragment : Fragment(R.layout.fragment_mis_animales) {
         }
     }
 
-    // Menú superior de la toolbar
+
     private fun addMenu() {
         val menuHost: MenuHost = requireActivity()
 
         menuHost.addMenuProvider(object : MenuProvider {
 
-            // Cargamos el menú general: Home, Perfil y Salir
+            // Menu
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_general, menu)
             }
@@ -91,7 +89,7 @@ class MisAnimalesFragment : Fragment(R.layout.fragment_mis_animales) {
 
                 return when (menuItem.itemId) {
 
-                    // Volver a la pantalla principal
+                    // Volver a home
                     R.id.menu_home -> {
                         navController.navigate(R.id.EleccionFragment)
                         true
@@ -103,7 +101,7 @@ class MisAnimalesFragment : Fragment(R.layout.fragment_mis_animales) {
                         true
                     }
 
-                    // Salir de la app con confirmación
+                    // Salir
                     R.id.menu_logout -> {
                         androidx.appcompat.app.AlertDialog.Builder(requireContext())
                             .setTitle("Salir")

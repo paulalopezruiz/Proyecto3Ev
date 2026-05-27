@@ -42,7 +42,7 @@ class EncontradoFragment : Fragment(R.layout.fragment_encontrado) {
         // Guardar el animal encontrado
         val btnGuardar = view.findViewById<Button>(R.id.btnSalvar)
 
-        // Cargar opciones dentro de un Spinner.
+        // Cargar opciones dentro del Spinner
         fun cargarSpinner(spinner: Spinner, arrayId: Int) {
             ArrayAdapter.createFromResource(
                 requireContext(),
@@ -56,7 +56,7 @@ class EncontradoFragment : Fragment(R.layout.fragment_encontrado) {
             }
         }
 
-        // Cargamos los valores de arrays.xml en cada spinner.
+        // Cargamos los valores de arrays.xml en cada spinner
         cargarSpinner(spinnerTipo, R.array.tipos_animales)
         cargarSpinner(spinnerSexo, R.array.sexos_animales)
         cargarSpinner(spinnerEstado, R.array.estados_animales)
@@ -113,15 +113,13 @@ class EncontradoFragment : Fragment(R.layout.fragment_encontrado) {
         }
     }
 
-    // Menú superior de la toolbar.
-    // Si la profesora pide añadir una nueva opción al menú,
-    // hay que añadirla en el XML del menú y después gestionarla aquí.
+    // Menu
     private fun addMenu() {
         val menuHost: MenuHost = requireActivity()
 
         menuHost.addMenuProvider(object : MenuProvider {
 
-            // Cargamos el menú general: Home, Perfil y Salir
+
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_general, menu)
             }
@@ -131,19 +129,19 @@ class EncontradoFragment : Fragment(R.layout.fragment_encontrado) {
 
                 return when (menuItem.itemId) {
 
-                    // Volver a la pantalla principal
+
                     R.id.menu_home -> {
                         navController.navigate(R.id.EleccionFragment)
                         true
                     }
 
-                    // Ir al perfil del usuario
+
                     R.id.menu_profile -> {
                         navController.navigate(R.id.PerfilFragment)
                         true
                     }
 
-                    // Salir de la aplicación mostrando un diálogo
+
                     R.id.menu_logout -> {
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")
@@ -158,21 +156,6 @@ class EncontradoFragment : Fragment(R.layout.fragment_encontrado) {
 
                         true
                     }
-
-                    // Ejemplo para examen:
-                    // Si en menu_general.xml añades:
-                    //
-                    // <item
-                    //     android:id="@+id/menu_hola"
-                    //     android:title="Hola"
-                    //     app:showAsAction="never" />
-                    //
-                    // Aquí lo controlarías así:
-                    //
-                    // R.id.menu_hola -> {
-                    //     Toast.makeText(requireContext(), "Hola", Toast.LENGTH_SHORT).show()
-                    //     true
-                    // }
 
                     else -> false
                 }

@@ -54,8 +54,7 @@ class ListaAnimalesFragment : Fragment(R.layout.fragment_lista_animales) {
 
         recycler.adapter = adapter
 
-        // Botones de filtro.
-
+        // Botones de filtro
         val btnPerro = view.findViewById<View>(R.id.btnPerro)
         val btnGato = view.findViewById<View>(R.id.btnGato)
         val btnPajaro = view.findViewById<View>(R.id.btnPajaro)
@@ -71,7 +70,7 @@ class ListaAnimalesFragment : Fragment(R.layout.fragment_lista_animales) {
         }
     }
 
-    // Activa o desactiva un filtro.
+    // Activa o desactiva un filtro
     private fun toggleFiltro(tipo: String, boton: View) {
         if (filtrosActivos.contains(tipo)) {
             filtrosActivos.remove(tipo)
@@ -98,13 +97,13 @@ class ListaAnimalesFragment : Fragment(R.layout.fragment_lista_animales) {
         adapter.actualizarLista(filtrada)
     }
 
-    // Menú superior
+    // Menu
     private fun addMenu() {
         val menuHost: MenuHost = requireActivity()
 
         menuHost.addMenuProvider(object : MenuProvider {
 
-            // Cargamos el menú general con Home, Perfil y Salir
+
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_general, menu)
             }
@@ -114,7 +113,7 @@ class ListaAnimalesFragment : Fragment(R.layout.fragment_lista_animales) {
 
                 return when (menuItem.itemId) {
 
-                    // Volver a la pantalla principal
+                    // Volver a Home
                     R.id.menu_home -> {
                         navController.navigate(R.id.EleccionFragment)
                         true
@@ -126,7 +125,7 @@ class ListaAnimalesFragment : Fragment(R.layout.fragment_lista_animales) {
                         true
                     }
 
-                    // Salir de la app
+                    // Salir
                     R.id.menu_logout -> {
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")

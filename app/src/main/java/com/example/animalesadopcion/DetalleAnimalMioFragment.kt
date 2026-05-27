@@ -38,11 +38,12 @@ class DetalleAnimalMioFragment : Fragment(R.layout.fragment_detalle_animal_mio) 
 
         animalId = arguments?.getInt("id") ?: 0
 
+        // Elementos del xml
         val imgAnimal = view.findViewById<ImageView>(R.id.imgDetalleAnimalMio)
         val txtNombre = view.findViewById<TextView>(R.id.txtNombreAnimalMio)
         val txtUbicacion = view.findViewById<TextView>(R.id.txtUbicacionAnimalMio)
         val txtSexo = view.findViewById<TextView>(R.id.txtSexoAnimalMio)
-        val txtEdad = view.findViewById<TextView>(R.id.txtEdadAnimalMio)
+        val txtEstado = view.findViewById<TextView>(R.id.txtEstadoAnimalMio)
         val txtInformacion = view.findViewById<TextView>(R.id.txtInformacionAnimalMio)
         val txtEditar = view.findViewById<TextView>(R.id.txtEditarAnimalMio)
 
@@ -50,13 +51,12 @@ class DetalleAnimalMioFragment : Fragment(R.layout.fragment_detalle_animal_mio) 
 
         vm.obtenerAnimal(animalId).observe(viewLifecycleOwner) { animal ->
 
-            // Mostramos info del animal adoptado
+            // Mostrar info del animal adoptado
             imgAnimal.setImageResource(animal.imagen)
             txtNombre.text = animal.tipo
             txtUbicacion.text = animal.localizacion
             txtSexo.text = animal.sexo
-            txtEdad.text = animal.estado
-
+            txtEstado.text = animal.estado
 
             txtInformacion.text = if (animal.informacion.isNotBlank()) {
                 animal.informacion
@@ -71,12 +71,13 @@ class DetalleAnimalMioFragment : Fragment(R.layout.fragment_detalle_animal_mio) 
                     editMode = true
                     txtEditar.text = "✔"
 
-                    // Convertimos los TextView en campos editables
+
                     activarEdicion(txtNombre)
                     activarEdicion(txtUbicacion)
                     activarEdicion(txtSexo)
-                    activarEdicion(txtEdad)
+                    activarEdicion(txtEstado)
                     activarEdicion(txtInformacion)
+
 
                     txtInformacion.background = null
 
@@ -84,15 +85,18 @@ class DetalleAnimalMioFragment : Fragment(R.layout.fragment_detalle_animal_mio) 
                     editMode = false
                     txtEditar.text = "✎"
 
+
                     txtInformacion.background = fondoInfoOriginal
+
 
                     val actualizado = animal.copy(
                         tipo = txtNombre.text.toString(),
                         localizacion = txtUbicacion.text.toString(),
                         sexo = txtSexo.text.toString(),
-                        estado = txtEdad.text.toString(),
+                        estado = txtEstado.text.toString(),
                         informacion = txtInformacion.text.toString()
                     )
+
 
                     viewLifecycleOwner.lifecycleScope.launch {
                         vm.actualizar(actualizado)
@@ -120,7 +124,7 @@ class DetalleAnimalMioFragment : Fragment(R.layout.fragment_detalle_animal_mio) 
         textView.setPadding(16, 16, 16, 16)
     }
 
-    // Menú superior de la toolbar
+    // Menu
     private fun addMenu() {
         val menuHost: MenuHost = requireActivity()
 
@@ -147,7 +151,7 @@ class DetalleAnimalMioFragment : Fragment(R.layout.fragment_detalle_animal_mio) 
                         true
                     }
 
-                    // Salir de la app
+                    // Salir
                     R.id.menu_logout -> {
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")

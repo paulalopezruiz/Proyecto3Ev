@@ -43,13 +43,13 @@ class EleccionFragment : Fragment(R.layout.fragment_eleccion) {
 
                 return when (menuItem.itemId) {
 
-                    // Ir al perfil del usuario
+                    // Ir al perfil
                     R.id.menu_profile -> {
                         navController.navigate(R.id.PerfilFragment)
                         true
                     }
 
-                    // Salir de la app con confirmación
+                    // Salir
                     R.id.menu_logout -> {
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")

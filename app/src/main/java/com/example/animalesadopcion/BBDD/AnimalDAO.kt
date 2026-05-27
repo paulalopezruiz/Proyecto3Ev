@@ -3,7 +3,7 @@ package com.example.animalesadopcion.BBDD
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
-// Consultas de la tabla animales
+
 @Dao
 interface AnimalDAO {
 

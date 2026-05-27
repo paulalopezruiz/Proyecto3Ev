@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Pantalla de detalle de un animal adoptado por el usuario.
+     Desde aquí se pueden ver y editar sus datos. -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,6 +9,7 @@
     android:layout_height="match_parent"
     android:background="#FFE28A">
 
+    <!-- Imagen grande del animal -->
     <ImageView
         android:id="@+id/imgDetalleAnimalMio"
         android:layout_width="0dp"
@@ -17,6 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Contenedor inferior con la información del animal -->
     <LinearLayout
         android:id="@+id/contenedorDetalleAnimalMio"
         android:layout_width="0dp"
@@ -32,18 +37,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- NOMBRE + UBICACIÓN + EDITAR -->
+        <!-- Nombre, ubicación y botón editar -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
+            <!-- Nombre y ubicación -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
 
                 <TextView
                     android:id="@+id/txtNombreAnimalMio"
@@ -65,6 +72,7 @@
 
             </LinearLayout>
 
+            <!-- Editar -->
             <TextView
                 android:id="@+id/txtEditarAnimalMio"
                 android:layout_width="wrap_content"
@@ -76,7 +84,7 @@
 
         </LinearLayout>
 
-        <!-- DATOS (SEXO, EDAD, PESO) -->
+        <!-- Sexo y estado del animal-->
         <LinearLayout
             android:id="@+id/contenedorDatosAnimalMio"
             android:layout_width="match_parent"
@@ -97,10 +105,10 @@
                 android:background="@drawable/fondo_dato_verde" />
 
             <TextView
-                android:id="@+id/txtEdadAnimalMio"
+                android:id="@+id/txtEstadoAnimalMio"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:text="Edad"
+                android:text="Estado"
                 android:textColor="#5A000B"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -110,7 +118,6 @@
 
         </LinearLayout>
 
-        <!-- INFORMACIÓN -->
         <TextView
             android:id="@+id/txtInformacionAnimalMio"
             android:layout_width="match_parent"

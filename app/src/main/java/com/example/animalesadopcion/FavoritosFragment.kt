@@ -107,7 +107,7 @@ class FavoritosFragment : Fragment(R.layout.fragment_favoritos) {
 
         menuHost.addMenuProvider(object : MenuProvider {
 
-            // Cargamos el xml del menú general: Home, Perfil y Salir
+            // Cargamos el xml del menú (home, perfil y salir)
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_general, menu)
             }
@@ -128,7 +128,7 @@ class FavoritosFragment : Fragment(R.layout.fragment_favoritos) {
                         true
                     }
 
-                    // Salir de la aplicación
+                    // Salir
                     R.id.menu_logout -> {
                         AlertDialog.Builder(requireContext())
                             .setTitle("Salir")

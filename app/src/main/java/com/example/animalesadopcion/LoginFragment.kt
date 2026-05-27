@@ -26,7 +26,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val repo = Repositorio(db.usuarioDAO(), db.animalDAO())
         vm = AppVMFactory(repo).create(AppVM::class.java)
 
-        // Referencias a los campos del XML
+        // Referencias a los campos del xml
         val edtNombre = view.findViewById<EditText>(R.id.edtNombreLogin)
         val edtPassword = view.findViewById<EditText>(R.id.edtPasswordLogin)
         val btnEntrar = view.findViewById<Button>(R.id.btnEntrar)
