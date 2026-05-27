@@ -57,7 +57,8 @@
             android:background="@drawable/fondo_input"
             android:gravity="center"
             android:hint="Telefono"
-            android:inputType="phone"            android:textColor="#5A000B"
+            android:inputType="phone"
+            android:textColor="#5A000B"
             android:textColorHint="#5A000B"
             android:textSize="16sp" />
 
